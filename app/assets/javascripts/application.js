@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require_tree ../../../public/LAYOUT-4/STANDARD/assets/js
+//= require_tree ../../../public/bower_components
 //= require turbolinks
-//= require_tree .

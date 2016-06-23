@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html>
+<!--[if IE 8]><html class="ie8" lang="en"><![endif]-->
+<!--[if IE 9]><html class="ie9" lang="en"><![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
 <head>
   <title>Antidote</title>
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta content="" name="description" />
+  <meta content="" name="author" />
+  <!-- end: META -->
+  <!-- start: GOOGLE FONTS -->
+  <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+  <!-- end: GOOGLE FONTS -->
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link rel="shortcut icon" href="/favicon.ico" />
+ <%= render 'shared/stylesheets' %>
+
 </head>
 <body>
+<div id="app" class="lyt-4">
 <%= render 'shared/header' %>
-<%= yield %>
+ <div class="container-fluid container-fullw">
+        <%= yield %>
+ </div>
 <%= render 'shared/footer' %>
+<%= render 'shared/javascripts' %>
+</div>
 </body>
 </html>
