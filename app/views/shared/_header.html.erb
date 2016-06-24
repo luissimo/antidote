@@ -34,9 +34,11 @@
                 <i class="fa fa-caret-down"></i>
               </button>
               <ul class="dropdown-menu animated fadeInRight pull-right">
+                <% link_to mijn_profiel_path do %>
                 <li>
-                  <a href="#"> My Profile </a>
+                  <a href="#"> Mijn profiel </a>
                 </li>
+                <% end %>
                 <li class="divider"></li>
                 <li>
                   <a href="#"> Log Out </a>
@@ -571,7 +573,7 @@
                     <a href="javascript:;" class="unread">
                       <div class="clearfix">
                         <div class="thread-image">
-                          <img src="./assets/images/avatar-2.jpg" alt="">
+                          <img src="/assets/images/avatar-2.jpg" alt="">
                         </div>
                         <div class="thread-content">
                           <span class="author">Nicole Bell</span>
@@ -687,7 +689,7 @@
 
             <ul class="dropdown-menu pull-right animated fadeInRight">
               <li>
-                <a href="#"> My Profile </a>
+                <%= link_to 'Mijn profiel', mijn_profiel_path %>
               </li>
               <li class="divider"></li>
               <li>
