@@ -1,5 +1,11 @@
+<h1>New Factuur</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', factuurs_path %>
+
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="panel panel-white">
       <div class="panel-body">
         <div class="invoice">
@@ -33,34 +39,20 @@
                 </address>
               </div>
             </div>
-            <div class="col-sm-4">
-              <h4>We appreciate your business.</h4>
-              <div class="padding-bottom-30 padding-top-10 text-dark">
-                Thanks for being a customer.
-                A detailed summary of your invoice is below.
-                <br>
-                If you have questions, we're happy to help.
-                <br>
-                Email support@cliptheme.com or contact us through other support channels.
-              </div>
-            </div>
             <div class="col-sm-4 pull-right">
               <h4>Payment Details:</h4>
               <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
                 <li>
-                  <strong>V.A.T Reg #:</strong> 233243444
+                  <strong>Bedrijf:</strong> OQBA
                 </li>
                 <li>
-                  <strong>Account Name:</strong> Company Ltd
+                  <strong>BTW</strong> Company Ltd
                 </li>
                 <li>
-                  <strong>SWIFT code:</strong> 1233F4343ABCDEW
+                  <strong>BTW</strong> 1233F4343ABCDEW
                 </li>
                 <li>
-                  <strong>DATE:</strong> 01/01/2014
-                </li>
-                <li>
-                  <strong>DUE:</strong> 11/02/2014
+                  <strong>BANK</strong> 01/01/2014
                 </li>
               </ul>
             </div>
@@ -119,24 +111,34 @@
             <div class="col-sm-12 invoice-block">
               <ul class="list-unstyled amounts text-small">
                 <li>
-                  <strong>Sub-Total:</strong> $12,876
+                  <strong>Subtotaal:</strong> $12,876
                 </li>
                 <li>
-                  <strong>Discount:</strong> 9.9%
+                  <strong>Korting:</strong> 9.9%
                 </li>
                 <li>
-                  <strong>VAT:</strong> 21%
-                </li>
+                  <strong>BTW:</strong> 21%
+                </li><hr/>
                 <li class="text-extra-large text-dark margin-top-15">
-                  <strong >Total:</strong> $11,400
+                  <strong >Totaal:</strong> $11,400
                 </li>
               </ul>
               <br>
-              <a onclick="javascript:window.print();" class="btn btn-lg btn-primary hidden-print"> Print <i class="fa fa-print"></i> </a>
-              <a class="btn btn-lg btn-primary btn-o hidden-print"> Opslaan <i class="fa fa-check"></i> </a>
             </div>
           </div>
+          <div class="panel-footer">
+            We verzoeken u vriendelijk het bovenstaande bedrag van € 0,00 voor 14-07-2016 te voldoen op onze bankrekening
+            onder vermelding van het factuurnummer Concept #1. Voor vragen kunt u contact opnemen per e-mail.
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-white">
+      <div class="panel-body">
+        <a onclick="javascript:window.print();" class="btn btn-lg btn-primary hidden-print"> Print <i class="fa fa-print"></i> </a>
+        <a class="btn btn-lg btn-primary btn-o hidden-print"> Opslaan <i class="fa fa-check"></i> </a> Opslaan als concept
       </div>
     </div>
   </div>

@@ -1,0 +1,2 @@
+module FactuursHelper
+end

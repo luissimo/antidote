@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @factuur.amount %>
+</p>
+
+<p>
+  <strong>Currency:</strong>
+  <%= @factuur.currency %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @factuur.date %>
+</p>
+
+<%= link_to 'Edit', edit_factuur_path(@factuur) %> |
+<%= link_to 'Back', factuurs_path %>

@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
 
 
+  resources :factuurs
  root 'pages#index'
 
- get 'factuur'         => 'facturen#show'
+
  get 'mijn-profiel'     => 'pages#profiel'
 
 
 
-  ## https://tranquil-garden-84227.herokuapp.com/ | https://git.heroku.com/tranquil-garden-84227.git
+## https://vast-fortress-16771.herokuapp.com/ | https://git.heroku.com/vast-fortress-16771.git
+
 end
