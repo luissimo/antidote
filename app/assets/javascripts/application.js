@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require_tree ../../../public/LAYOUT-4/STANDARD/assets/js
 //= require_tree ../../../public/bower_components
 //= require turbolinks

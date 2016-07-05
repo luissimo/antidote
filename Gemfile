@@ -11,6 +11,8 @@ gem 'turbolinks'
 gem 'json'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.0'
+gem 'twitter-bootstrap-rails'
+gem 'therubyracer'
 ## gem 'figaro' <-- env variables
 ## gem 'devise'
 ## gem 'watir-webdriver' <-- advanced browser stuff
@@ -33,3 +35,4 @@ group :production do
   gem 'rails_12factor'
   gem 'puma'
 end
+

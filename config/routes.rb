@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
 
-  resources :factuurs
+  resources :customers
+  resources :companies
  root 'pages#index'
 
 
