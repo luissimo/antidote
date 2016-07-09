@@ -3,10 +3,8 @@ Rails.application.routes.draw do
 
   resources :customers
   resources :companies
- root 'pages#index'
 
-
- get 'mijn-profiel'     => 'pages#profiel'
+ root 'pages#profiel'
 
 
 

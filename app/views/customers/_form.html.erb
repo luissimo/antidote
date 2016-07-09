@@ -1,4 +1,4 @@
-<%= form_for @customer, :html => { :class => "form-horizontal customer" } do |f| %>
+<%= form_for (@customer = Customer.new) , :html => { :class => "form-horizontal customer" } do |f| %>
 
   <% if @customer.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -16,105 +16,105 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :company_name, :class => 'control-label col-lg-2' %>
+    <%= f.label :Bedrijfsnaam, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :company_name, :class => 'form-control' %>
     </div>
     <%=f.error_span(:company_name) %>
   </div>
   <div class="form-group">
-    <%= f.label :first_name, :class => 'control-label col-lg-2' %>
+    <%= f.label :Voornaam, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :first_name, :class => 'form-control' %>
     </div>
     <%=f.error_span(:first_name) %>
   </div>
   <div class="form-group">
-    <%= f.label :last_name, :class => 'control-label col-lg-2' %>
+    <%= f.label :Achternaam, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :last_name, :class => 'form-control' %>
     </div>
     <%=f.error_span(:last_name) %>
   </div>
   <div class="form-group">
-    <%= f.label :send_to_name, :class => 'control-label col-lg-2' %>
+    <%= f.label :Ter_attentie_van,  :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :send_to_name, :class => 'form-control' %>
     </div>
     <%=f.error_span(:send_to_name) %>
   </div>
   <div class="form-group">
-    <%= f.label :address_line_1, :class => 'control-label col-lg-2' %>
+    <%= f.label :Adres_1, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :address_line_1, :class => 'form-control' %>
     </div>
     <%=f.error_span(:address_line_1) %>
   </div>
   <div class="form-group">
-    <%= f.label :address_line_2, :class => 'control-label col-lg-2' %>
+    <%= f.label :Adres_2, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :address_line_2, :class => 'form-control' %>
     </div>
     <%=f.error_span(:address_line_2) %>
   </div>
   <div class="form-group">
-    <%= f.label :zip_code, :class => 'control-label col-lg-2' %>
+    <%= f.label :Postcode, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :zip_code, :class => 'form-control' %>
     </div>
     <%=f.error_span(:zip_code) %>
   </div>
   <div class="form-group">
-    <%= f.label :country_name, :class => 'control-label col-lg-2' %>
+    <%= f.label :Land, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :country_name, :class => 'form-control' %>
     </div>
     <%=f.error_span(:country_name) %>
   </div>
   <div class="form-group">
-    <%= f.label :email_address, :class => 'control-label col-lg-2' %>
+    <%= f.label :Email_adres, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :email_address, :class => 'form-control' %>
     </div>
     <%=f.error_span(:email_address) %>
   </div>
   <div class="form-group">
-    <%= f.label :phone_number, :class => 'control-label col-lg-2' %>
+    <%= f.label :Telefoonnummer, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :phone_number, :class => 'form-control' %>
     </div>
     <%=f.error_span(:phone_number) %>
   </div>
   <div class="form-group">
-    <%= f.label :kvk_number, :class => 'control-label col-lg-2' %>
+    <%= f.label :kvk_nummer, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :kvk_number, :class => 'form-control' %>
     </div>
     <%=f.error_span(:kvk_number) %>
   </div>
   <div class="form-group">
-    <%= f.label :btw_number, :class => 'control-label col-lg-2' %>
+    <%= f.label :btw_nummer, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :btw_number, :class => 'form-control' %>
     </div>
     <%=f.error_span(:btw_number) %>
   </div>
   <div class="form-group">
-    <%= f.label :iban_number, :class => 'control-label col-lg-2' %>
+    <%= f.label :IBAN, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :iban_number, :class => 'form-control' %>
     </div>
     <%=f.error_span(:iban_number) %>
   </div>
   <div class="form-group">
-    <%= f.label :bic_number, :class => 'control-label col-lg-2' %>
+    <%= f.label :BIC, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :bic_number, :class => 'form-control' %>
     </div>
     <%=f.error_span(:bic_number) %>
   </div>
   <div class="form-group">
-    <%= f.label :bank_holder_name, :class => 'control-label col-lg-2' %>
+    <%= f.label :Naam_bankhouder, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :bank_holder_name, :class => 'form-control' %>
     </div>

@@ -1,0 +1,63 @@
+<%- model_class = Customer -%>
+<% @customers = Customer.all %>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-white">
+        <div class="panel-body">
+          <h5 class="over-title margin-bottom-15">Klanten <span class="text-bold">overzicht</span></h5>
+          <div class="alert alert-info">
+            Hier ziet u al uw opgeslagen klanten, deze kunt u eenvoudig toevoegen aan nieuwe facturen.
+          </div>
+          <%= link_to t('.new', :default => t("helpers.links. Nieuwe klant toevoegen")),
+                      new_customer_path,
+                      :class => 'btn btn-primary btn-lg pull-right fa fa-arrow-circle-down' %><br/><br/><br/>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <th><%= model_class.human_attribute_name(:id) %></th>
+                <th><%= model_class.human_attribute_name(:Bedrijfsnaam) %></th>
+                <th><%= model_class.human_attribute_name(:Voornaam) %></th>
+                <th><%= model_class.human_attribute_name(:Achternaam) %></th>
+                <th><%= model_class.human_attribute_name(:Adres_1) %></th>
+                <th><%= model_class.human_attribute_name(:Email_adres) %></th>
+                <th><%= model_class.human_attribute_name(:Telefoon_nummer) %></th>
+                <th><%= model_class.human_attribute_name(:kvk_nummer) %></th>
+                <th><%= model_class.human_attribute_name(:IBAN) %></th>
+                <th><%=t '.actions', :default => t("helpers.actions") %></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @customers.each do |customer| %>
+                  <tr>
+                    <td><%= link_to customer.id, customer_path(customer) %></td>
+                    <td><%= customer.company_name %></td>
+                    <td><%= customer.first_name %></td>
+                    <td><%= customer.last_name %></td>
+                    <td><%= customer.address_line_1 %></td>
+                    <td><%= customer.email_address %></td>
+                    <td><%= customer.phone_number %></td>
+                    <td><%= customer.kvk_number %></td>
+                    <td><%= customer.iban_number %></td>
+                    <td>
+                     <span class="label label-sm label-success">
+                      <%= link_to t('.edit', :default => t("helpers.links.aanpassen")),
+                                  edit_customer_path(customer), :class => 'label label-sm label-success' %> </span>
+                      <span class="label label-sm label-danger">
+                      <%= link_to t('.destroy', :default => t("helpers.links.x")),
+                                  customer_path(customer),
+                                  :method => :delete,
+                                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Weet u het zeker?')) },
+                                  :class => 'label label-sm label-danger' %> </span>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
