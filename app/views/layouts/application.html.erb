@@ -27,8 +27,11 @@
 </head>
 <body>
 <div id="app" class="lyt-4">
+  <%= render 'shared/header' %>
  <div class="container-fluid container-fullw">
+   <div class="main-content">
         <%= yield %>
+   </div>
  </div>
 <%= render 'shared/footer' %>
 <%= render 'shared/javascripts' %>
