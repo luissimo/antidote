@@ -1,60 +1,70 @@
 <%- model_class = Company -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:company_name) %></th>
-      <th><%= model_class.human_attribute_name(:address_line_1) %></th>
-      <th><%= model_class.human_attribute_name(:address_line_2) %></th>
-      <th><%= model_class.human_attribute_name(:zip_code) %></th>
-      <th><%= model_class.human_attribute_name(:city_name) %></th>
-      <th><%= model_class.human_attribute_name(:country_name) %></th>
-      <th><%= model_class.human_attribute_name(:email_address) %></th>
-      <th><%= model_class.human_attribute_name(:phone_number) %></th>
-      <th><%= model_class.human_attribute_name(:kvk_number) %></th>
-      <th><%= model_class.human_attribute_name(:btw_number) %></th>
-      <th><%= model_class.human_attribute_name(:iban_number) %></th>
-      <th><%= model_class.human_attribute_name(:bic_number) %></th>
-      <th><%= model_class.human_attribute_name(:bank_holder_name) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @companies.each do |company| %>
-      <tr>
-        <td><%= link_to company.id, company_path(company) %></td>
-        <td><%= company.company_name %></td>
-        <td><%= company.address_line_1 %></td>
-        <td><%= company.address_line_2 %></td>
-        <td><%= company.zip_code %></td>
-        <td><%= company.city_name %></td>
-        <td><%= company.country_name %></td>
-        <td><%= company.email_address %></td>
-        <td><%= company.phone_number %></td>
-        <td><%= company.kvk_number %></td>
-        <td><%= company.btw_number %></td>
-        <td><%= company.iban_number %></td>
-        <td><%= company.bic_number %></td>
-        <td><%= company.bank_holder_name %></td>
-        <td><%=l company.created_at %></td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_company_path(company), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      company_path(company),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_company_path,
-            :class => 'btn btn-primary' %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-white">
+      <div class="panel-body">
+        <h5 class="over-title margin-bottom-15">Mijn <span class="text-bold">gegevens</span></h5>
+        <div class="alert alert-info">
+          Hier ziet u uw bedrijfsgegevens die kunnen worden geplaatst in facturen en offertes.<br/> U kunt meerdere records toevoegen om zo eenvoudig te kunnen schakelen tussen verschillende bedrijven.
+        </div>
+        <%= link_to t('.new', :default => ' Nieuwe toevoegen'),
+                    new_company_path,
+                    :class => 'btn btn-primary btn-lg pull-right fa fa-arrow-circle-down' %><br/><br/><br/>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th><%= model_class.human_attribute_name(:id) %></th>
+              <th><%= model_class.human_attribute_name(:Bedrijfsnaam) %></th>
+              <th><%= model_class.human_attribute_name(:Adres_1) %></th>
+              <th><%= model_class.human_attribute_name(:Adres_2) %></th>
+              <th><%= model_class.human_attribute_name(:Postcode) %></th>
+              <th><%= model_class.human_attribute_name(:Stad) %></th>
+              <th><%= model_class.human_attribute_name(:Land) %></th>
+              <th><%= model_class.human_attribute_name(:Email_adres) %></th>
+              <th><%= model_class.human_attribute_name(:Telefoonnummer) %></th>
+              <th><%= model_class.human_attribute_name(:KVK_nummer) %></th>
+              <th><%= model_class.human_attribute_name(:BTW_nummer) %></th>
+              <th><%= model_class.human_attribute_name(:IBAN) %></th>
+              <th><%= model_class.human_attribute_name(:BIC) %></th>
+              <th><%= model_class.human_attribute_name(:Naam_bankhouder) %></th>
+              <th><%=t '.actions', :default => t("helpers.actions") %></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @companies.each do |company| %>
+                <tr>
+                  <td><%= link_to company.id, company_path(company) %></td>
+                  <td><%= company.company_name %></td>
+                  <td><%= company.address_line_1 %></td>
+                  <td><%= company.address_line_2 %></td>
+                  <td><%= company.zip_code %></td>
+                  <td><%= company.city_name %></td>
+                  <td><%= company.country_name %></td>
+                  <td><%= company.email_address %></td>
+                  <td><%= company.phone_number %></td>
+                  <td><%= company.kvk_number %></td>
+                  <td><%= company.btw_number %></td>
+                  <td><%= company.iban_number %></td>
+                  <td><%= company.bic_number %></td>
+                  <td><%= company.bank_holder_name %></td>
+                  <td>
+                    <%= link_to t('.edit', :default => t("helpers.links.Aanpassen")),
+                                edit_company_path(company), :class => 'btn btn-primary btn-success' %>
+                    <%= link_to t('.destroy', :default => t("helpers.links.x")),
+                                company_path(company),
+                                :method => :delete,
+                                :data => { :confirm => t('.confirm', :default => t("helpers.links.bevestigen", :default => 'Weet u het zeker?')) },
+                                :class => 'btn btn-primary btn-danger' %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
