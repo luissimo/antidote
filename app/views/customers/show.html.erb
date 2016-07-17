@@ -1,30 +1,30 @@
 <%- model_class = Customer -%>
+<hr/>
 <div class="col-md-12 col-md-offset-4">
-
-    <h1><%=t '.title', :default => @customer.company_name %></h1>
+    <h1><strong><%=t '.title', :default => @customer.company_name %></strong></h1>
 </div>
 
 <div class="col-md-12 col-md-offset-4">
-    <strong><%= model_class.human_attribute_name(:Bedrijfsnaam) %>:</strong> <%= @customer.company_name %><br/>
-    <strong><%= model_class.human_attribute_name(:Voornaam) %>:</strong> <%= @customer.first_name %><br/>
-    <strong><%= model_class.human_attribute_name(:Achternaam) %>:</strong> <%= @customer.last_name %><br/>
-    <strong><%= model_class.human_attribute_name(:Ter_attentie_van) %>:</strong> <%= @customer.send_to_name %><br/>
-    <strong><%= model_class.human_attribute_name(:Adres_1) %>:</strong> <%= @customer.address_line_1 %><br/>
-    <strong><%= model_class.human_attribute_name(:Adres_2) %>:</strong> <%= @customer.address_line_2 %><br/>
-    <strong><%= model_class.human_attribute_name(:Postcode) %>:</strong> <%= @customer.zip_code %><br/>
-    <strong><%= model_class.human_attribute_name(:Land) %>:</strong> <%= @customer.country_name %><br/>
-    <strong><%= model_class.human_attribute_name(:Email_adres) %>:</strong> <%= @customer.email_address %><br/>
-    <strong><%= model_class.human_attribute_name(:Telefoonnummer) %>:</strong> <%= @customer.phone_number %><br/>
-    <strong><%= model_class.human_attribute_name(:KVK_Nummer) %>:</strong> <%= @customer.kvk_number %><br/>
-    <strong><%= model_class.human_attribute_name(:BTW_nummer) %>:</strong> <%= @customer.btw_number %><br/>
-    <strong><%= model_class.human_attribute_name(:IBAN) %>:</strong> <%= @customer.iban_number %><br/>
-    <strong><%= model_class.human_attribute_name(:BIC) %>:</strong> <%= @customer.bic_number %><br/>
-    <strong><%= model_class.human_attribute_name(:Naam_bankhouder) %>:</strong> <%= @customer.bank_holder_name %><br/><br/>
-
+    <strong><code><%= model_class.human_attribute_name(:Bedrijfsnaam) %>:</code> <%= @customer.company_name %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Voornaam) %>:</code> <%= @customer.first_name %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Achternaam) %>:</code> <%= @customer.last_name %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Ter_attentie_van) %>:</code> <%= @customer.send_to_name %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Adres_1) %>:</code> <%= @customer.address_line_1 %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Adres_2) %>:</code> <%= @customer.address_line_2 %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Postcode) %>:</code> <%= @customer.zip_code %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Land) %>:</code> <%= @customer.country_name %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Email_adres) %>:</code> <%= @customer.email_address %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Telefoonnummer) %>:</code> <%= @customer.phone_number %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:KVK_Nummer) %>:</code> <%= @customer.kvk_number %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:BTW_nummer) %>:</code> <%= @customer.btw_number %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:IBAN) %>:</code> <%= @customer.iban_number %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:BIC) %>:</code> <%= @customer.bic_number %></strong><br/>
+    <strong><code><%= model_class.human_attribute_name(:Naam_bankhouder) %>:</code> <%= @customer.bank_holder_name %></strong><br/><br/>
 </div>
+
 <div class="col-md-3 col-md-offset-4">
   <%= link_to t('.back', :default => 'Terug'),
-                :back, :class => 'btn btn-primary btn-info'  %>
+                customers_path, :class => 'btn btn-primary btn-info'  %>
   <%= link_to t('.edit', :default => t("helpers.links.Aanpassen")),
                 edit_customer_path(@customer), :class => 'btn btn-primary btn-success' %>
   <%= link_to t('.destroy', :default => t("helpers.links.verwijderen")),

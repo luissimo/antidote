@@ -1,5 +1,5 @@
 <%= form_for @customer, :html => { :class => "form-horizontal customer" } do |f| %>
-
+<div class="col-md-8 col-md-offset-3">
   <% if @customer.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
@@ -123,13 +123,13 @@
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-4">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.Terug")),
-                :back , :class => 'btn btn-primary btn-info' %>
+      <%= f.submit nil, :class => 'btn btn-primary btn-success' %>
+      <%= link_to t('.cancel', :default => 'annuleren'),
+                :back , :class => 'btn btn-default' %>
     </div>
-  </div>
+  </div><br/><br/>
 
 <% end %>
+</div>
 
-<br/><br/>
 

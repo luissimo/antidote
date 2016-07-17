@@ -4,7 +4,7 @@
   <div class="col-md-12">
     <div class="panel panel-white">
       <div class="panel-body">
-        <h5 class="over-title margin-bottom-15">Mijn <span class="text-bold">gegevens</span></h5>
+        <h5 class="over-title margin-bottom-15">Mijn <span class="text-bold">instellingen</span></h5>
         <div class="alert alert-info">
           Hier ziet u uw bedrijfsgegevens die kunnen worden geplaatst in facturen en offertes.<br/> U kunt meerdere records toevoegen om zo eenvoudig te kunnen schakelen tussen verschillende bedrijven.
         </div>
@@ -15,19 +15,10 @@
           <table class="table table-bordered table-hover">
             <thead>
             <tr>
-              <th><%= model_class.human_attribute_name(:id) %></th>
+              <th><%= model_class.human_attribute_name('#') %></th>
               <th><%= model_class.human_attribute_name(:Bedrijfsnaam) %></th>
               <th><%= model_class.human_attribute_name(:Adres_1) %></th>
-              <th><%= model_class.human_attribute_name(:Adres_2) %></th>
-              <th><%= model_class.human_attribute_name(:Postcode) %></th>
-              <th><%= model_class.human_attribute_name(:Stad) %></th>
-              <th><%= model_class.human_attribute_name(:Land) %></th>
-              <th><%= model_class.human_attribute_name(:Email_adres) %></th>
-              <th><%= model_class.human_attribute_name(:Telefoonnummer) %></th>
-              <th><%= model_class.human_attribute_name(:KVK_nummer) %></th>
-              <th><%= model_class.human_attribute_name(:BTW_nummer) %></th>
               <th><%= model_class.human_attribute_name(:IBAN) %></th>
-              <th><%= model_class.human_attribute_name(:BIC) %></th>
               <th><%= model_class.human_attribute_name(:Naam_bankhouder) %></th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
@@ -38,18 +29,11 @@
                   <td><%= link_to company.id, company_path(company) %></td>
                   <td><%= company.company_name %></td>
                   <td><%= company.address_line_1 %></td>
-                  <td><%= company.address_line_2 %></td>
-                  <td><%= company.zip_code %></td>
-                  <td><%= company.city_name %></td>
-                  <td><%= company.country_name %></td>
-                  <td><%= company.email_address %></td>
-                  <td><%= company.phone_number %></td>
-                  <td><%= company.kvk_number %></td>
-                  <td><%= company.btw_number %></td>
                   <td><%= company.iban_number %></td>
-                  <td><%= company.bic_number %></td>
                   <td><%= company.bank_holder_name %></td>
                   <td>
+                    <%= link_to '',
+                                company_path(company), class: 'btn btn-primary btn-info glyphicon glyphicon-search' %>
                     <%= link_to t('.edit', :default => t("helpers.links.Aanpassen")),
                                 edit_company_path(company), :class => 'btn btn-primary btn-success' %>
                     <%= link_to t('.destroy', :default => t("helpers.links.x")),

@@ -1,43 +1,33 @@
 <%- model_class = Company -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+<hr/>
+<div class="col-md-12 col-md-offset-4">
+  <h1><strong><%=t '.title', :default => @company.company_name %></strong></h1>
 </div>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:company_name) %>:</strong></dt>
-  <dd><%= @company.company_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:address_line_1) %>:</strong></dt>
-  <dd><%= @company.address_line_1 %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:address_line_2) %>:</strong></dt>
-  <dd><%= @company.address_line_2 %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:zip_code) %>:</strong></dt>
-  <dd><%= @company.zip_code %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:city_name) %>:</strong></dt>
-  <dd><%= @company.city_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:country_name) %>:</strong></dt>
-  <dd><%= @company.country_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:email_address) %>:</strong></dt>
-  <dd><%= @company.email_address %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:phone_number) %>:</strong></dt>
-  <dd><%= @company.phone_number %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:kvk_number) %>:</strong></dt>
-  <dd><%= @company.kvk_number %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:btw_number) %>:</strong></dt>
-  <dd><%= @company.btw_number %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:iban_number) %>:</strong></dt>
-  <dd><%= @company.iban_number %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:bic_number) %>:</strong></dt>
-  <dd><%= @company.bic_number %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:bank_holder_name) %>:</strong></dt>
-  <dd><%= @company.bank_holder_name %></dd>
-</dl>
+<div class="col-md-12 col-md-offset-4">
+  <strong><code><%= model_class.human_attribute_name('Bedrijfsnaam') %>:</code>  <%= @company.company_name %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Adres 1') %>:</code> <%= @company.address_line_1 %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Adres 2') %>:</code>  <%= @company.address_line_2 %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Postcode') %>:</code>  <%= @company.zip_code %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Stad') %>:</code>  <%= @company.city_name %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Land') %>:</code>  <%= @company.country_name %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Email adres') %>:</code>   <%= @company.email_address %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Telefoonnummer') %>:</code>  <%= @company.phone_number %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('KVK nummer') %>:</code>  <%= @company.kvk_number %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('BTW nummer') %>:</code>  <%= @company.btw_number %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Iban') %>:</code>  <%= @company.iban_number %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('BIC') %>:</code>  <%= @company.bic_number %></strong><br/>
+  <strong><code><%= model_class.human_attribute_name('Naam Bankhouder') %>:</code>  <%= @company.bank_holder_name %></strong><br/><br/>
+</div>
 
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              companies_path, :class => 'btn btn-default'  %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_company_path(@company), :class => 'btn btn-default' %>
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              company_path(@company),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+<div class="col-md-3 col-md-offset-4">
+  <%= link_to t('.back', :default => t("helpers.links.terug")),
+                companies_path, :class => 'btn btn-primary btn-info'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.aanpassen")),
+                edit_company_path(@company), :class => 'btn btn-primary btn-success' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.verwijderen")),
+                company_path(@company),
+                :method => 'delete',
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.bevestigen", :default => 'Weet u het zeker?')) },
+                :class => 'btn btn-primary btn-danger' %>
+</div>

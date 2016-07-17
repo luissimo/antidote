@@ -4,7 +4,7 @@
     <div class="col-md-12">
       <div class="panel panel-white">
         <div class="panel-body">
-          <h5 class="over-title margin-bottom-15">Klanten <span class="text-bold">overzicht</span></h5>
+          <h5 class="over-title margin-bottom-15">Mijn <span class="text-bold">klanten</span></h5>
           <div class="alert alert-info">
             Hier ziet u al uw opgeslagen klanten, deze kunt u eenvoudig toevoegen aan nieuwe facturen.
           </div>
@@ -15,7 +15,7 @@
             <table class="table table-bordered table-hover">
               <thead>
               <tr>
-                <th><%= model_class.human_attribute_name(:id) %></th>
+                <th><%= model_class.human_attribute_name('#') %></th>
                 <th><%= model_class.human_attribute_name(:Bedrijfsnaam) %></th>
                 <th><%= model_class.human_attribute_name(:Voornaam) %></th>
                 <th><%= model_class.human_attribute_name(:Achternaam) %></th>
@@ -40,6 +40,8 @@
                     <td><%= customer.kvk_number %></td>
                     <td><%= customer.iban_number %></td>
                     <td>
+                      <%= link_to '',
+                                  customer_path(customer), class: 'btn btn-primary btn-info glyphicon glyphicon-search' %>
 
                       <%= link_to t('.edit', :default => t("helpers.links.aanpassen")),
                                   edit_customer_path(customer), :class => 'btn btn-primary btn-success' %>

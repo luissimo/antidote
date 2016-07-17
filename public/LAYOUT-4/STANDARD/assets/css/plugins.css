@@ -81,7 +81,7 @@ img-crop {
   overflow-y: hidden !important;
 }
 
-.touch .app-mobile *[perfect-scrollbar] {
+.touch .app-mobile *[perfect-scrollbarx] {
   overflow-y: scroll !important;
   -webkit-overflow-scrolling: touch !important;
 }

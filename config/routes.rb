@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :products
+  resources :products, path: :producten
   resources :customers, path: :klanten
   resources :companies, path: :instellingen
 
