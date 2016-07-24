@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @invoice.number %>
+</p>
+
+<p>
+  <strong>Currency:</strong>
+  <%= @invoice.currency %>
+</p>
+
+<p>
+  <strong>Datum:</strong>
+  <%= @invoice.date.strftime('%d-%m-%Y') %>
+</p>
+
+<p>
+  <strong>Verstrijkt op:</strong>
+  <%= @invoice.duedate.strftime('%d-%m-%Y') %>
+</p>
+
+<p>
+  <strong>Btwtotal:</strong>
+  <%= @invoice.btwtotal %>
+</p>
+
+<p>
+  <strong>Subtotal:</strong>
+  <%= @invoice.subtotal %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @invoice.total %>
+</p>
+
+<p>
+  <strong>Footer:</strong>
+  <%= @invoice.footer %>
+</p>
+
+<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%= link_to 'Back', invoices_path %>

@@ -1,0 +1,197 @@
+<%= form_for(@invoice) do |f| %>
+  <% if @invoice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+      <ul>
+      <% @invoice.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<div class="container-fluid container-fullw">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-white">
+        <div class="panel-body">
+          <div class="invoice">
+            <div class="row invoice-logo">
+              <div class="col-sm-6">
+                <img alt="" src="assets/images/your-logo-here.png">
+              </div>
+              <div class="col-sm-6">
+                <p class="text-dark">
+                  <%= @invoice.number %> <small class="text-light"> 23-07-2016 </small>
+                </p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-4">
+                <%= @customer.select(:company_name) do |f| %>
+                    <h4>Klant:</h4>
+                    <div class="well">
+                      <address>
+                        <strong class="text-dark"><%= f.company_name %></strong><br/>
+                        <%= f.first_name + f.last_name if f.first_name.present? && f.last_name.present?%><br/>
+                        <%= f.address_line_1 %><br/>
+                        <%= f.address_line_2 if present? %>
+                        Cupertino, CA 95014
+                        <br>
+                        <abbr title="Phone">P:</abbr> (123) 456-7890
+                      </address>
+                      <address>
+                        <strong class="text-dark">E-mail:</strong>
+                        <a href="mailto:#"> info@customer.com </a>
+                      </address>
+                    </div>
+                <% end %>
+              </div>
+              <div class="col-sm-4 pull-right">
+                <h4>Gegevens:</h4>
+                <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
+                  <li>
+                    <strong>BTW #:</strong> 233243444
+                  </li>
+                  <li>
+                    <strong>Bedrijfsnaam:</strong> Company B.V
+                  </li>
+                  <li>
+                    <strong>IBAN:</strong> 1233F4343ABCDEW
+                  </li>
+                  <li>
+                    <strong>Factuurdatum:</strong> 01/01/2016
+                  </li>
+                  <li>
+                    <strong>Te betalen voor:</strong> 11/02/2016
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th> # </th>
+                    <th> Item </th>
+                    <th class="hidden-480"> Description </th>
+                    <th class="hidden-480"> Quantity </th>
+                    <th class="hidden-480"> Unit Cost </th>
+                    <th> Total </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td> 1 </td>
+                    <td> Lorem </td>
+                    <td class="hidden-480"> Drem psum dolor </td>
+                    <td class="hidden-480"> 12 </td>
+                    <td class="hidden-480"> $35 </td>
+                    <td> $1152 </td>
+                  </tr>
+                  <tr>
+                    <td> 2 </td>
+                    <td> Ipsum </td>
+                    <td class="hidden-480"> Consectetuer adipiscing elit </td>
+                    <td class="hidden-480"> 21 </td>
+                    <td class="hidden-480"> $469 </td>
+                    <td> $6159 </td>
+                  </tr>
+                  <tr>
+                    <td> 3 </td>
+                    <td> Dolor </td>
+                    <td class="hidden-480"> Olor sit amet adipiscing eli </td>
+                    <td class="hidden-480"> 24 </td>
+                    <td class="hidden-480"> $144 </td>
+                    <td> $8270 </td>
+                  </tr>
+                  <tr>
+                    <td> 4 </td>
+                    <td> Sit </td>
+                    <td class="hidden-480"> Laoreet dolore magna </td>
+                    <td class="hidden-480"> 194 </td>
+                    <td class="hidden-480"> $317 </td>
+                    <td> $966 </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 invoice-block">
+                <ul class="list-unstyled amounts text-small">
+                  <li>
+                    <strong>Subtotaal:</strong>
+                    <div class="field">
+                    <%= f.text_field :subtotal %>
+                  </div>
+                  </li>
+                  <!-- <li>
+                     <strong>Discount:</strong>
+                   </li> -->
+                  <li>
+                    <strong>BTW:</strong>
+                    <div class="field">
+                      <%= f.text_field :btwtotal %>
+                    </div>
+                  </li>
+                  <li class="text-extra-large text-dark margin-top-15">
+                    <strong >Totaal:</strong>
+                    <div class="field">
+                      <%= f.text_field :total %>
+                    </div>
+                  </li>
+                </ul>
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <%= @invoice.footer.present? ? @invoice.footer : "We verzoeken u vriendelijk het bovenstaande bedrag van
+            € #{@invoice.total} voor #{@invoice.duedate} te voldoen op onze bankrekening onder vermelding van het
+            factuurnummer #{@invoice.number}. Voor vragen kunt u contact opnemen per e-mail." %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-white">
+        <div class="panel-body">
+          <div class="form-group">
+            <div class="field">
+              <%= f.label :Factuurnummer %><br>
+              <%= f.text_field :number, placeholder: '2016-0001' %>
+            </div>
+            <div class="form-group">
+              <%= f.label :Munteenheid %><br>
+              <%= f.select(:currency, [[' €', 1, title: 'Euro', value: 'EURO'], [' $', 2, title: 'US Dollar', value: 'USD'],
+                                       [' £', 3, title: 'GBP Pound', value: 'GBP']]) %>
+            </div>
+            <div class="field">
+              <%= f.label :factuurdatum %><br>
+              <%= f.date_select :date %>
+            </div>
+            <div class="field">
+              <%= f.label 'te betalen voor' %><br>
+              <%= f.date_select :duedate %>
+            </div>
+            <div class="field">
+              <%= f.label :footer %><br>
+              <%= f.text_area :footer %>
+            </div>
+            <div class="actions">
+              <%= f.submit 'opslaan', class: 'btn btn-primary btn-success' %>
+              <%= link_to 'annuleren', invoices_path, class: 'btn btn-primary btn-info' %>
+              <a onclick="javascript:window.print();" class="btn btn-primary float-right"> print <i class="fa fa-print"></i></a>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- end: INVOICE -->
