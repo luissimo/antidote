@@ -24,11 +24,10 @@
               </div>
               <div class="col-sm-6">
                 <p class="text-dark">
-                  <strong id="factuurnummer_output"></strong> <small class="text-light" id="factuurdatum_output">  </small>
+                  <strong id="factuurnummer_output"></strong> <small class="text-light" id="factuurdatum_output"></small>
                 </p>
               </div>
-            </div>
-            <hr>
+            </div><hr>
             <div class="row">
               <div class="col-sm-4">
                     <h4>Klant:</h4>
@@ -237,7 +236,38 @@
     $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
   });
 
+  // Output invoicedate on invoice body
+  $("#date_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) )
 
+  $("#invoice_date_3i").change(function()
+  {
+    $('#date_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
+  });
+  $("#invoice_date_2i").change(function()
+  {
+    $('#date_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
+  });
+  $("#invoice_date_1i").change(function()
+  {
+    $('#date_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+  });
+
+  // Output invoice duedate on invoice body
+
+  $("#duedate_output").text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) )
+
+  $("#invoice_duedate_3i").change(function()
+  {
+    $('#duedate_output').text(' ' +  ($(this).val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) ) ;
+  });
+  $("#invoice_duedate_2i").change(function()
+  {
+    $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_duedate_1i").val()) ) ;
+  });
+  $("#invoice_duedate_1i").change(function()
+  {
+    $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+  });
 </script>
 
 
