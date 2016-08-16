@@ -15,7 +15,7 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   def new
     @invoice = Invoice.new
-    @customer = Customer.all
+    @customers = Customer.all
   end
 
   # GET /invoices/1/edit

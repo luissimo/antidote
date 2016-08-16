@@ -20,26 +20,36 @@
           <div class="invoice">
             <div class="row invoice-logo">
               <div class="col-sm-6">
-                <img alt="" src="assets/images/your-logo-here.png">
+                <img alt="" src="">
               </div>
               <div class="col-sm-6">
                 <p class="text-dark">
-                  <%= @invoice.number %> <small class="text-light"> 23-07-2016 </small>
+                  <strong id="factuurnummer_output"></strong> <small class="text-light" id="factuurdatum_output">  </small>
                 </p>
               </div>
             </div>
             <hr>
             <div class="row">
               <div class="col-sm-4">
-                <%= @customer.select(:company_name) do |f| %>
                     <h4>Klant:</h4>
                     <div class="well">
                       <address>
-                        <strong class="text-dark"><%= f.company_name %></strong><br/>
-                        <%= f.first_name + f.last_name if f.first_name.present? && f.last_name.present?%><br/>
-                        <%= f.address_line_1 %><br/>
-                        <%= f.address_line_2 if present? %>
-                        Cupertino, CA 95014
+                        <!--
+                        <%= f.select :customer, options_for_select(@customers.map { | customer | [customer.company_name, customer.id, "show-field" => customer.company_name] }),
+                                     { id: "my_select" } %> -->
+                        <strong class="text-dark" id="show_company_name"> </strong><br/>
+                        <div class="form-group">
+                          <%= f.label 'Bedrijfsnaam ontvanger' %><br>
+                          <%= f.text_field :number, placeholder: 'bedrijfsnaam' %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label 'Adres ontvanger' %><br>
+                          <%= f.text_field :number, placeholder: 'adres ontvanger' %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label 'Postcode & stad' %><br>
+                          <%= f.text_field :number, placeholder: '1234AB Rotterdam' %>
+                        </div>
                         <br>
                         <abbr title="Phone">P:</abbr> (123) 456-7890
                       </address>
@@ -48,7 +58,6 @@
                         <a href="mailto:#"> info@customer.com </a>
                       </address>
                     </div>
-                <% end %>
               </div>
               <div class="col-sm-4 pull-right">
                 <h4>Gegevens:</h4>
@@ -63,10 +72,10 @@
                     <strong>IBAN:</strong> 1233F4343ABCDEW
                   </li>
                   <li>
-                    <strong>Factuurdatum:</strong> 01/01/2016
+                    <strong>Factuurdatum:</strong> <em id="date_output">01/01/2016</em>
                   </li>
                   <li>
-                    <strong>Te betalen voor:</strong> 11/02/2016
+                    <strong>Te betalen voor:</strong><em id="duedate_output"> 11/02/2016 </em>
                   </li>
                 </ul>
               </div>
@@ -162,9 +171,9 @@
       <div class="panel panel-white">
         <div class="panel-body">
           <div class="form-group">
-            <div class="field">
+            <div class="form-group">
               <%= f.label :Factuurnummer %><br>
-              <%= f.text_field :number, placeholder: '2016-0001' %>
+              <%= f.text_field :number, placeholder: '2016-0001', id: 'factuurnummer_input' %>
             </div>
             <div class="form-group">
               <%= f.label :Munteenheid %><br>
@@ -175,13 +184,13 @@
               <%= f.label :factuurdatum %><br>
               <%= f.date_select :date %>
             </div>
-            <div class="field">
+            <div class="form-group">
               <%= f.label 'te betalen voor' %><br>
               <%= f.date_select :duedate %>
             </div>
-            <div class="field">
+            <div class="form-group">
               <%= f.label :footer %><br>
-              <%= f.text_area :footer %>
+              <%= f.text_area :footer, id: 'footer-text' %>
             </div>
             <div class="actions">
               <%= f.submit 'opslaan', class: 'btn btn-primary btn-success' %>
@@ -194,4 +203,41 @@
       </div>
     </div>
   </div>
+</div>
 <!-- end: INVOICE -->
+
+<script>
+  //// show values of database selected item
+ // $("#my_select").change(function()
+ // {
+ //   var selection = $(this).find(":selected");
+ //   document.getElementById('show_company_name').innerHTML = selection._data("show-field").value;
+ // });
+
+  // Output invoicenumber on invoice.
+  $("#factuurnummer_input").change(function()
+  {
+    $('#factuurnummer_output').text($(this).val()) ;
+  });
+
+  // Output invoicedate on invoice header
+
+  $("#factuurdatum_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
+
+  $("#invoice_date_3i").change(function()
+  {
+    $('#factuurdatum_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
+  });
+  $("#invoice_date_2i").change(function()
+  {
+    $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
+  });
+  $("#invoice_date_1i").change(function()
+  {
+    $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+  });
+
+
+</script>
+
+
