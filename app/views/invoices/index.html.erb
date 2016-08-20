@@ -18,7 +18,6 @@
               <th>Totale btw bedrag</th>
               <th>Subtotaal</th>
               <th>Totaal</th>
-              <th>Footer</th>
               <th colspan="3"></th>
             </tr>
             </thead>
@@ -30,9 +29,9 @@
                   <td><%= invoice.currency %></td>
                   <td><%= invoice.date.strftime('%d-%m-%Y') %></td>
                   <td><%= invoice.duedate.strftime('%d-%m-%Y') %></td>
-                  <td><%= invoice.btwtotal %></td>
-                  <td><%= invoice.subtotal %></td>
-                  <td><%= invoice.total %></td>
+                  <td>€<%= invoice.btwtotal %></td>
+                  <td>€<%= invoice.subtotal %></td>
+                  <td>€<%= invoice.total %></td>
                   <td><%= link_to '', invoice, class: 'btn btn-primary btn-info glyphicon glyphicon-search' %>
                       <%= link_to 'Aanpassen', edit_invoice_path(invoice), data: { confirm: 'Weet u zeker dat u een factuur wilt aanpassen?' },
                                   class: 'btn btn-primary btn-success' %>

@@ -1,5 +1,5 @@
-<%= form_for(@invoice) do |f| %>
-  <% if @invoice.errors.any? %>
+<%= form_for @invoice do |f| %>
+<% if @invoice.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
 
@@ -14,6 +14,38 @@
 
 <div class="container-fluid container-fullw">
   <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-white">
+        <div class="panel-body">
+            <div class="field">
+              <%= f.label :Factuurnummer %><br>
+              <%= f.text_field :number, placeholder: '2016-0001', id: 'factuurnummer_input' %>
+            </div>
+            <div class="field">
+              <%= f.label :Munteenheid %><br>
+              <%= f.select(:currency, [[' €', 1, title: 'Euro', value: 'EURO'], [' $', 2, title: 'US Dollar', value: 'USD'],
+                                       [' £', 3, title: 'GBP Pound', value: 'GBP']]) %>
+            </div>
+            <div class="field">
+              <%= f.label :factuurdatum %><br>
+              <%= f.date_select :date %>
+            </div>
+            <div class="field">
+              <%= f.label 'te betalen voor' %><br>
+              <%= f.date_select :duedate %>
+            </div>
+            <div class="field">
+              <%= f.label :footer %><br>
+              <%= f.text_area :footer, id: 'footer-text' %>
+            </div>
+            <div class="actions">
+              <%= f.submit 'Opslaan', class: 'btn btn-primary btn-success' %>
+              <%= link_to 'Annuleren', invoices_path, class: 'btn btn-primary btn-info' %>
+              <a onclick="javascript:window.print();" class="btn btn-primary float-right"> Print <i class="fa fa-print"></i></a>
+            </div>
+        </div>
+      </div>
+    </div>
     <div class="col-md-8">
       <div class="panel panel-white">
         <div class="panel-body">
@@ -33,24 +65,13 @@
                     <h4>Klant:</h4>
                     <div class="well">
                       <address>
-                        <!--
-                        <%= f.select :customer, options_for_select(@customers.map { | customer | [customer.company_name, customer.id, "show-field" => customer.company_name] }),
-                                     { id: "my_select" } %> -->
-                        <strong class="text-dark" id="show_company_name"> </strong><br/>
-                        <div class="form-group">
-                          <%= f.label 'Bedrijfsnaam ontvanger' %><br>
-                          <%= f.text_field :number, placeholder: 'bedrijfsnaam' %>
-                        </div>
-                        <div class="form-group">
-                          <%= f.label 'Adres ontvanger' %><br>
-                          <%= f.text_field :number, placeholder: 'adres ontvanger' %>
-                        </div>
-                        <div class="form-group">
-                          <%= f.label 'Postcode & stad' %><br>
-                          <%= f.text_field :number, placeholder: '1234AB Rotterdam' %>
-                        </div>
+                        <%= f.object.build_customer if f.object.customer.nil? %>
+                        <%= f.fields_for :customer do |customer| %>
+                        <%= render 'customer_fields', f: customer %>
+                        <%= link_to_add_association '+',f, :customer, class: 'btn btn-small btn-success' %>
                         <br>
                         <abbr title="Phone">P:</abbr> (123) 456-7890
+                        <% end %>
                       </address>
                       <address>
                         <strong class="text-dark">E-mail:</strong>
@@ -84,47 +105,18 @@
                 <table class="table table-striped">
                   <thead>
                   <tr>
-                    <th> # </th>
-                    <th> Item </th>
-                    <th class="hidden-480"> Description </th>
-                    <th class="hidden-480"> Quantity </th>
-                    <th class="hidden-480"> Unit Cost </th>
-                    <th> Total </th>
+                    <th class="hidden-480"> Hoeveelheid </th>
+                    <th class="hidden-480"> Beschrijving </th>
+                    <th class="hidden-480"> Bedrag </th>
+                    <th class="hidden-480"> Totaal </th>
+                    <th class="hidden-480"> Btw(%) </th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td> 1 </td>
-                    <td> Lorem </td>
-                    <td class="hidden-480"> Drem psum dolor </td>
-                    <td class="hidden-480"> 12 </td>
-                    <td class="hidden-480"> $35 </td>
-                    <td> $1152 </td>
-                  </tr>
-                  <tr>
-                    <td> 2 </td>
-                    <td> Ipsum </td>
-                    <td class="hidden-480"> Consectetuer adipiscing elit </td>
-                    <td class="hidden-480"> 21 </td>
-                    <td class="hidden-480"> $469 </td>
-                    <td> $6159 </td>
-                  </tr>
-                  <tr>
-                    <td> 3 </td>
-                    <td> Dolor </td>
-                    <td class="hidden-480"> Olor sit amet adipiscing eli </td>
-                    <td class="hidden-480"> 24 </td>
-                    <td class="hidden-480"> $144 </td>
-                    <td> $8270 </td>
-                  </tr>
-                  <tr>
-                    <td> 4 </td>
-                    <td> Sit </td>
-                    <td class="hidden-480"> Laoreet dolore magna </td>
-                    <td class="hidden-480"> 194 </td>
-                    <td class="hidden-480"> $317 </td>
-                    <td> $966 </td>
-                  </tr>
+                    <%= f.fields_for :products do |product| %>
+                    <%= render 'product_fields', f: product %>
+                    <%= link_to_add_association 'Item toevoegen', f, :products, class: 'btn btn-primary btn-success' %>
+                    <% end %>
                   </tbody>
                 </table>
               </div>
@@ -154,6 +146,7 @@
                     </div>
                   </li>
                 </ul>
+                <% end %>
                 <br>
               </div>
             </div>
@@ -162,41 +155,6 @@
             <%= @invoice.footer.present? ? @invoice.footer : "We verzoeken u vriendelijk het bovenstaande bedrag van
             € #{@invoice.total} voor #{@invoice.duedate} te voldoen op onze bankrekening onder vermelding van het
             factuurnummer #{@invoice.number}. Voor vragen kunt u contact opnemen per e-mail." %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="panel panel-white">
-        <div class="panel-body">
-          <div class="form-group">
-            <div class="form-group">
-              <%= f.label :Factuurnummer %><br>
-              <%= f.text_field :number, placeholder: '2016-0001', id: 'factuurnummer_input' %>
-            </div>
-            <div class="form-group">
-              <%= f.label :Munteenheid %><br>
-              <%= f.select(:currency, [[' €', 1, title: 'Euro', value: 'EURO'], [' $', 2, title: 'US Dollar', value: 'USD'],
-                                       [' £', 3, title: 'GBP Pound', value: 'GBP']]) %>
-            </div>
-            <div class="field">
-              <%= f.label :factuurdatum %><br>
-              <%= f.date_select :date %>
-            </div>
-            <div class="form-group">
-              <%= f.label 'te betalen voor' %><br>
-              <%= f.date_select :duedate %>
-            </div>
-            <div class="form-group">
-              <%= f.label :footer %><br>
-              <%= f.text_area :footer, id: 'footer-text' %>
-            </div>
-            <div class="actions">
-              <%= f.submit 'opslaan', class: 'btn btn-primary btn-success' %>
-              <%= link_to 'annuleren', invoices_path, class: 'btn btn-primary btn-info' %>
-              <a onclick="javascript:window.print();" class="btn btn-primary float-right"> print <i class="fa fa-print"></i></a>
-            </div>
-            <% end %>
           </div>
         </div>
       </div>
@@ -237,7 +195,7 @@
   });
 
   // Output invoicedate on invoice body
-  $("#date_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) )
+  $("#date_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
 
   $("#invoice_date_3i").change(function()
   {
@@ -254,7 +212,7 @@
 
   // Output invoice duedate on invoice body
 
-  $("#duedate_output").text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) )
+  $("#duedate_output").text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) );
 
   $("#invoice_duedate_3i").change(function()
   {

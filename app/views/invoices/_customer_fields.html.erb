@@ -1,0 +1,15 @@
+<div class="nested-fields">
+  <div class="field">
+    <%= f.label 'Bedrijfsnaam ontvanger' %><br/>
+    <%= f.text_field :company_name, placeholder: 'bedrijfsnaam' %>
+  </div>
+  <div class="field">
+    <%= f.label 'Adres ontvanger' %><br>
+    <%= f.text_field :address_line_1, placeholder: 'adres ontvanger' %>
+  </div>
+  <div class="field">
+    <%= f.label 'Postcode & stad' %><br>
+    <%= f.text_field :zip_code, placeholder: '1234AB Rotterdam' %>
+  </div>
+  <%= link_to_remove_association "x", f, class: 'btn btn-primary btn-danger' %>
+</div>

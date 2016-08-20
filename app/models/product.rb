@@ -1,5 +1,6 @@
 class Product < ActiveRecord::Base
 
+ belongs_to :invoice
 
   # btw calculation
   def btw_calc
