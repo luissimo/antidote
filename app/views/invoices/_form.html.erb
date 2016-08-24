@@ -172,7 +172,7 @@
           </div>
           <div class="panel-footer">
             <%= @invoice.footer.present? ? @invoice.footer : "We verzoeken u vriendelijk het bovenstaande bedrag van
-            € #{@invoice.total} voor #{@invoice.duedate.strftime('%d-%m-%Y')} te voldoen op onze bankrekening onder vermelding van het
+            € #{@invoice.total} voor #{@invoice.duedate} te voldoen op onze bankrekening onder vermelding van het
             factuurnummer #{@invoice.number}. Voor vragen kunt u contact opnemen per e-mail." %>
           </div>
         </div>
