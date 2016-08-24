@@ -1,10 +1,7 @@
-<div class="nested-fields">
-    <tr>
-      <td> <%= f.text_field :quantity %> </td>
-      <td> <%= f.text_area :description %> </td>
-      <td> <%= f.number_field :unitprice %> </td>
-      <td> €200  </td>
-      <td> <%= f.select(:btw, [[' 21%', 21, title: '21%'],[' 6%', 6, title: '6%'], [' 0%', 0, title: '0%']]) %> </td>
-    </tr>
+
+<td> <%= product.number_field :quantity, class: 'quantity' %> </td>
+<td> <%= product.text_area :description %> </td>
+<td> <%= product.number_field :unitprice, class: 'unitprice' %> </td>
+<td class='total'>  </td>
+<td> <%= product.select(:btw, [[' 21%', 21, title: '21%'],[' 6%', 6, title: '6%'], [' 0%', 0, title: '0%']], class: 'btw_percentage') %> </td>
   <%= link_to_remove_association 'x', f, class: 'btn btn-primary btn-danger' %>
-</div>

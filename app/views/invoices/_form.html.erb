@@ -19,24 +19,24 @@
         <div class="panel-body">
             <div class="field">
               <%= f.label :Factuurnummer %><br>
-              <%= f.text_field :number, placeholder: '2016-0001', id: 'factuurnummer_input' %>
+              <%= f.text_field :number, placeholder: '2016-0001', id: 'factuurnummer_input', class: 'form-control' %>
             </div>
             <div class="field">
               <%= f.label :Munteenheid %><br>
-              <%= f.select(:currency, [[' €', 1, title: 'Euro', value: 'EURO'], [' $', 2, title: 'US Dollar', value: 'USD'],
-                                       [' £', 3, title: 'GBP Pound', value: 'GBP']]) %>
+              <%= f.select(:currency, [[' €', '€', title: 'Euro', value: 'EURO'], [' $', '$', title: 'US Dollar', value: 'USD'],
+                                       [' £', '£', title: 'GBP Pound', value: 'GBP']]) %>
             </div>
             <div class="field">
               <%= f.label :factuurdatum %><br>
-              <%= f.date_select :date %>
+              <%= f.date_select :date, class: 'form-control' %>
             </div>
             <div class="field">
               <%= f.label 'te betalen voor' %><br>
-              <%= f.date_select :duedate %>
+              <%= f.date_select :duedate, class: 'form-control' %>
             </div>
             <div class="field">
               <%= f.label :footer %><br>
-              <%= f.text_area :footer, id: 'footer-text' %>
+              <%= f.text_area :footer, id: 'footer-text', class: 'form-control' %>
             </div>
             <div class="actions">
               <%= f.submit 'Opslaan', class: 'btn btn-primary btn-success' %>
@@ -65,10 +65,19 @@
                     <h4>Klant:</h4>
                     <div class="well">
                       <address>
-                        <%= f.object.build_customer if f.object.customer.nil? %>
                         <%= f.fields_for :customer do |customer| %>
-                        <%= render 'customer_fields', f: customer %>
-                        <%= link_to_add_association '+',f, :customer, class: 'btn btn-small btn-success' %>
+                            <div class="field">
+                              <%= customer.label 'Bedrijfsnaam ontvanger' %><br/>
+                              <%= customer.text_field :company_name, placeholder: 'bedrijfsnaam', class: 'form-control' %>
+                            </div>
+                            <div class="field">
+                              <%= customer.label 'Adres ontvanger' %><br>
+                              <%= customer.text_field :address_line_1, placeholder: 'adres ontvanger', class: 'form-control' %>
+                            </div>
+                            <div class="field">
+                              <%= customer.label 'Postcode & stad' %><br>
+                              <%= customer.text_field :zip_code, placeholder: '1234AB Rotterdam', class: 'form-control' %>
+                            </div>
                         <br>
                         <abbr title="Phone">P:</abbr> (123) 456-7890
                         <% end %>
@@ -112,11 +121,21 @@
                     <th class="hidden-480"> Btw(%) </th>
                   </tr>
                   </thead>
+                  <tfoot>
+                  <tr id="hiderow">
+                    <td colspan="6"><a id="add_products" class="btn btn-success btn-sm" href="javascript:;" title="Rij toevoegen"><span class="ti-plus"></span>  Rij toevoegen</a></td>
+                  </tr>
+                  </tfoot>
+                  <%= f.fields_for :products do |product| %>
                   <tbody>
-                    <%= f.fields_for :products do |product| %>
-                    <%= render 'product_fields', f: product %>
-                    <%= link_to_add_association 'Item toevoegen', f, :products, class: 'btn btn-primary btn-success' %>
-                    <% end %>
+                      <tr class="products_tr">
+                        <td> <%= product.text_field :quantity, id: 'quantity', class: 'form-control' %> </td>
+                        <td> <%= product.text_area :description, class: 'form-control' %> </td>
+                        <td> <%= product.text_field :unitprice, id: 'unitprice', class: 'form-control' %> </td>
+                        <td id='total' readonly="readonly"> 100 </td>
+                        <td> <%= product.select(:btw, [[' 21%', 21, title: '21%'],[' 6%', 6, title: '6%'], [' 0%', 0, title: '0%']], id: 'btw_percentage') %> </td>
+                      </tr>
+                  <% end %>
                   </tbody>
                 </table>
               </div>
@@ -153,7 +172,7 @@
           </div>
           <div class="panel-footer">
             <%= @invoice.footer.present? ? @invoice.footer : "We verzoeken u vriendelijk het bovenstaande bedrag van
-            € #{@invoice.total} voor #{@invoice.duedate} te voldoen op onze bankrekening onder vermelding van het
+            € #{@invoice.total} voor #{@invoice.duedate.strftime('%d-%m-%Y')} te voldoen op onze bankrekening onder vermelding van het
             factuurnummer #{@invoice.number}. Voor vragen kunt u contact opnemen per e-mail." %>
           </div>
         </div>
@@ -226,6 +245,44 @@
   {
     $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
   });
+
+
+  var quantity = ($('#quantity').val());
+  var unitprice = ($('#unitprice').val());
+  var btw_percentage = ($('#btw_percentage').val());
+
+  var total = (quantity * unitprice) * (btw_percentage);
+
+  $('#quantity').change(function() {
+    $('#total').text(total);
+  });
+
+  $('#unitprice').change(function() {
+    $('#total').text(total);
+  });
+
+  $('#btw_percentage').change(function() {
+    $('#total').text(total);
+  });
+
+  $(document).ready(function() {
+    var counter = $('.products_tr').length;
+    $('#add_products').click(function() {
+      $('.products_tr:last').after('<tr class="products_tr"><td><input class="quantity form-control" type="text" value="" name="invoice[products_attributes]['+counter+'][quantity]"></td>' +
+          '<td><textarea class="form-control" name="invoice[products_attributes]['+counter+'][description]"></textarea></td>' +
+          '<td><input id="unitprice" class="form-control" type="text" name="invoice[products_attributes]['+counter+'][unitprice]"></td>' +
+          '<td class="total" readonly="readonly"> 100 </td>' +
+          '<td><select name="invoice[products_attributes]['+counter+'][btw]"><option title="21%" value="21"> 21%</option> ' +
+          '<option title="6%" value="6"> 6%</option><option title="0%" value="0"> 0%</option></select></td>' +
+          '<td class="delete_tr"><a class="delete" title="Rij verwijderen"><span class="ti-close"></span></a></td></tr>');
+      counter ++;
+    });
+  });
+
+    $(document).on('click', '.delete_tr', function() {
+        $(this).closest('tr').remove();
+    });
+
 </script>
 
 
