@@ -24,7 +24,7 @@
             <div class="field">
               <%= f.label :Munteenheid %><br>
               <%= f.select(:currency, [[' €', '€', title: 'Euro', value: 'EURO'], [' $', '$', title: 'US Dollar', value: 'USD'],
-                                       [' £', '£', title: 'GBP Pound', value: 'GBP']]) %>
+                                       [' £', '£', title: 'GBP Pound', value: 'GBP']], {}, {id: 'invoice_currency'}) %>
             </div>
             <div class="field">
               <%= f.label :factuurdatum %><br>
@@ -129,11 +129,12 @@
                   <%= f.fields_for :products do |product| %>
                   <tbody>
                       <tr class="products_tr">
-                        <td> <%= product.text_field :quantity, id: 'quantity', class: 'form-control' %> </td>
+                        <td> <%= product.text_field :quantity, class: 'quantity form-control' %> </td>
                         <td> <%= product.text_area :description, class: 'form-control' %> </td>
-                        <td> <%= product.text_field :unitprice, id: 'unitprice', class: 'form-control' %> </td>
-                        <td id='total' readonly="readonly"> 100 </td>
-                        <td> <%= product.select(:btw, [[' 21%', 21, title: '21%'],[' 6%', 6, title: '6%'], [' 0%', 0, title: '0%']], id: 'btw_percentage') %> </td>
+                        <td> <%= product.text_field :unitprice, class: 'unitprice form-control' %> </td>
+                        <td class="row_total"> </td>
+                        <td> <%= product.select(:btw, [[' 21%', 21, title: '21%'],[' 6%', 6, title: '6%'], [' 0%', 0, title: '0%']], {}, {class: 'btw_percentage', id: nil})%> </td>
+                        <td class='delete_tr'><a class="delete" title="Rij verwijderen"><span class="ti-close"></span></a></td>
                       </tr>
                   <% end %>
                   </tbody>
@@ -146,7 +147,7 @@
                   <li>
                     <strong>Subtotaal:</strong>
                     <div class="field">
-                    <%= f.text_field :subtotal %>
+                    <p id="invoice_subtotal"></p>
                   </div>
                   </li>
                   <!-- <li>
@@ -155,13 +156,13 @@
                   <li>
                     <strong>BTW:</strong>
                     <div class="field">
-                      <%= f.text_field :btwtotal %>
+                      <p id="invoice_btwtotal"></p>
                     </div>
                   </li>
                   <li class="text-extra-large text-dark margin-top-15">
                     <strong >Totaal:</strong>
                     <div class="field">
-                      <%= f.text_field :total %>
+                      <p id="invoice_total"></p>
                     </div>
                   </li>
                 </ul>
@@ -246,42 +247,123 @@
     $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
   });
 
-
-  var quantity = ($('#quantity').val());
-  var unitprice = ($('#unitprice').val());
-  var btw_percentage = ($('#btw_percentage').val());
-
-  var total = (quantity * unitprice) * (btw_percentage);
-
-  $('#quantity').change(function() {
-    $('#total').text(total);
-  });
-
-  $('#unitprice').change(function() {
-    $('#total').text(total);
-  });
-
-  $('#btw_percentage').change(function() {
-    $('#total').text(total);
-  });
-
+  // add a row
   $(document).ready(function() {
     var counter = $('.products_tr').length;
     $('#add_products').click(function() {
       $('.products_tr:last').after('<tr class="products_tr"><td><input class="quantity form-control" type="text" value="" name="invoice[products_attributes]['+counter+'][quantity]"></td>' +
           '<td><textarea class="form-control" name="invoice[products_attributes]['+counter+'][description]"></textarea></td>' +
-          '<td><input id="unitprice" class="form-control" type="text" name="invoice[products_attributes]['+counter+'][unitprice]"></td>' +
-          '<td class="total" readonly="readonly"> 100 </td>' +
-          '<td><select name="invoice[products_attributes]['+counter+'][btw]"><option title="21%" value="21"> 21%</option> ' +
+          '<td><input id="unitprice" class="unitprice form-control" type="text" name="invoice[products_attributes]['+counter+'][unitprice]"></td>' +
+          '<td class="row_total"></td>' +
+          '<td><select class="btw_percentage" name="invoice[products_attributes]['+counter+'][btw]"><option title="21%" value="21"> 21%</option> ' +
           '<option title="6%" value="6"> 6%</option><option title="0%" value="0"> 0%</option></select></td>' +
           '<td class="delete_tr"><a class="delete" title="Rij verwijderen"><span class="ti-close"></span></a></td></tr>');
       counter ++;
     });
   });
 
-    $(document).on('click', '.delete_tr', function() {
-        $(this).closest('tr').remove();
+  // delete a row
+  $(document).on('click', '.delete_tr', function() {
+    $(this).closest('tr').remove();
+  });
+
+  // hide delete row button unless atleast rows > 1
+  $(document).ready(function() {
+    rowlength = $('.products_tr').length;
+    if(rowlength > 1) {
+      $('.delete_tr').show();
+    } else {
+      $('.delete_tr').hide();
+    }
+  });
+
+  // do row total calculation if quantity value changes
+  $(document).on('change', '.quantity', function(){
+    var total = 0,rowtotal = 0;
+    $('.products_tr').each(function(){
+      var quantity       =  parseInt($(this).find('.quantity').val());
+      var unitprice      =  parseFloat($(this).find('.unitprice').val());
+      var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+      var btw = (btw_percentage / 100 ) + 1;
+      rowtotal           =  quantity * unitprice * btw;
+      var currency = $('#invoice_currency option:selected').html();
+      var fixed_rowtotal = currency + rowtotal.toFixed(2);
+      if (parseFloat($(this).find('.unitprice').val())) {
+        $(this).find('.row_total').text(fixed_rowtotal);
+        total+=rowtotal;
+      }
+      else if (isNaN(rowtotal)) {
+        $(this).find('.row_total').text(currency);
+      }
+      else {
+        $(this).find('.row_total').text(currency);
+      }
     });
+  });
+
+  // do row total calculation if unitprice value changes
+  $(document).on('change', '.unitprice', function(){
+    var total = 0,rowtotal = 0;
+    $('.products_tr').each(function(){
+      var quantity       =  parseInt($(this).find('.quantity').val());
+      var unitprice      =  parseFloat($(this).find('.unitprice').val());
+      var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+      var btw = (btw_percentage / 100 ) + 1;
+      rowtotal           =  quantity * unitprice * btw;
+      var currency = $('#invoice_currency option:selected').html();
+      var fixed_rowtotal = currency + rowtotal.toFixed(2);
+      $(this).find('.row_total').text(fixed_rowtotal);
+      total+=rowtotal;
+    });
+  });
+  // do row total calculation if btw_percentage value changes
+  $(document).on('change', '.btw_percentage', function(){
+    var total = 0,rowtotal = 0;
+    $('.products_tr').each(function(){
+      var quantity       =  parseInt($(this).find('.quantity').val());
+      var unitprice      =  parseFloat($(this).find('.unitprice').val());
+      var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+      var btw = (btw_percentage / 100 ) + 1;
+      rowtotal           =  quantity * unitprice * btw;
+      var currency = $('#invoice_currency option:selected').html();
+      var fixed_rowtotal = currency + rowtotal.toFixed(2);
+      $(this).find('.row_total').text(fixed_rowtotal);
+      total+=rowtotal;
+    });
+  });
+  // do row total calculation if currency value changes
+  $(document).on('change', '#invoice_currency', function() {
+    var total = 0,rowtotal = 0;
+    $('.products_tr').each(function(){
+      var quantity       =  parseInt($(this).find('.quantity').val());
+      var unitprice      =  parseFloat($(this).find('.unitprice').val());
+      var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+      var btw = (btw_percentage / 100 ) + 1;
+      rowtotal           =  quantity * unitprice * btw;
+      var currency = $('#invoice_currency option:selected').html();
+      var fixed_rowtotal = currency + rowtotal.toFixed(2);
+      if (parseFloat($(this).find('.unitprice').val())) {
+        $(this).find('.row_total').text(fixed_rowtotal);
+        total+=rowtotal;
+      }
+      else if (isNaN(rowtotal)) {
+        $(this).find('.row_total').text(currency);
+      }
+      else {
+        $(this).find('.row_total').text(currency);
+      }
+    });
+  });
+
+    $(document).ready(function() {
+      $('.products_tr').change(function() {
+        var length = $('.products_tr').length;
+        if (length > 10) {
+          $('#add_products').hide();
+        }
+      })
+    });
+
 
 </script>
 
