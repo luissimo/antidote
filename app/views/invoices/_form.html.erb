@@ -67,24 +67,18 @@
                       <address>
                         <%= f.fields_for :customer do |customer| %>
                             <div class="field">
-                              <%= customer.label 'Bedrijfsnaam ontvanger' %><br/>
+                              <%= customer.label 'Bedrijfsnaam ontvanger', class: 'text-large'  %><br/>
                               <%= customer.text_field :company_name, placeholder: 'bedrijfsnaam', class: 'form-control' %>
                             </div>
                             <div class="field">
-                              <%= customer.label 'Adres ontvanger' %><br>
+                              <%= customer.label 'Adres ontvanger', class: 'text-large' %><br>
                               <%= customer.text_field :address_line_1, placeholder: 'adres ontvanger', class: 'form-control' %>
                             </div>
                             <div class="field">
-                              <%= customer.label 'Postcode & stad' %><br>
+                              <%= customer.label 'Postcode & stad', class: 'text-large' %><br>
                               <%= customer.text_field :zip_code, placeholder: '1234AB Rotterdam', class: 'form-control' %>
                             </div>
-                        <br>
-                        <abbr title="Phone">P:</abbr> (123) 456-7890
                         <% end %>
-                      </address>
-                      <address>
-                        <strong class="text-dark">E-mail:</strong>
-                        <a href="mailto:#"> info@customer.com </a>
                       </address>
                     </div>
               </div>
@@ -184,187 +178,196 @@
 <!-- end: INVOICE -->
 
 <script>
-  //// show values of database selected item
- // $("#my_select").change(function()
- // {
- //   var selection = $(this).find(":selected");
- //   document.getElementById('show_company_name').innerHTML = selection._data("show-field").value;
- // });
+    //// show values of database selected item
+    // $("#my_select").change(function()
+    // {
+    //   var selection = $(this).find(":selected");
+    //   document.getElementById('show_company_name').innerHTML = selection._data("show-field").value;
+    // });
 
-  // Output invoicenumber on invoice.
-  $("#factuurnummer_input").change(function()
-  {
-    $('#factuurnummer_output').text($(this).val()) ;
-  });
-
-  // Output invoicedate on invoice header
-
-  $("#factuurdatum_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
-
-  $("#invoice_date_3i").change(function()
-  {
-    $('#factuurdatum_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
-  });
-  $("#invoice_date_2i").change(function()
-  {
-    $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
-  });
-  $("#invoice_date_1i").change(function()
-  {
-    $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
-  });
-
-  // Output invoicedate on invoice body
-  $("#date_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
-
-  $("#invoice_date_3i").change(function()
-  {
-    $('#date_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
-  });
-  $("#invoice_date_2i").change(function()
-  {
-    $('#date_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
-  });
-  $("#invoice_date_1i").change(function()
-  {
-    $('#date_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
-  });
-
-  // Output invoice duedate on invoice body
-
-  $("#duedate_output").text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) );
-
-  $("#invoice_duedate_3i").change(function()
-  {
-    $('#duedate_output').text(' ' +  ($(this).val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) ) ;
-  });
-  $("#invoice_duedate_2i").change(function()
-  {
-    $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_duedate_1i").val()) ) ;
-  });
-  $("#invoice_duedate_1i").change(function()
-  {
-    $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
-  });
-
-  // add a row
-  $(document).ready(function() {
-    var counter = $('.products_tr').length;
-    $('#add_products').click(function() {
-      $('.products_tr:last').after('<tr class="products_tr"><td><input class="quantity form-control" type="text" value="" name="invoice[products_attributes]['+counter+'][quantity]"></td>' +
-          '<td><textarea class="form-control" name="invoice[products_attributes]['+counter+'][description]"></textarea></td>' +
-          '<td><input id="unitprice" class="unitprice form-control" type="text" name="invoice[products_attributes]['+counter+'][unitprice]"></td>' +
-          '<td class="row_total"></td>' +
-          '<td><select class="btw_percentage" name="invoice[products_attributes]['+counter+'][btw]"><option title="21%" value="21"> 21%</option> ' +
-          '<option title="6%" value="6"> 6%</option><option title="0%" value="0"> 0%</option></select></td>' +
-          '<td class="delete_tr"><a class="delete" title="Rij verwijderen"><span class="ti-close"></span></a></td></tr>');
-      counter ++;
+    // Output invoicenumber on invoice.
+    $("#factuurnummer_input").change(function()
+    {
+      $('#factuurnummer_output').text($(this).val()) ;
     });
-  });
 
-  // delete a row
-  $(document).on('click', '.delete_tr', function() {
-    $(this).closest('tr').remove();
-  });
+    // Output invoicedate on invoice header
 
-  // hide delete row button unless atleast rows > 1
-  $(document).ready(function() {
-    rowlength = $('.products_tr').length;
-    if(rowlength > 1) {
-      $('.delete_tr').show();
-    } else {
-      $('.delete_tr').hide();
-    }
-  });
+    $("#factuurdatum_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
 
-  // do row total calculation if quantity value changes
-  $(document).on('change', '.quantity', function(){
-    var total = 0,rowtotal = 0;
-    $('.products_tr').each(function(){
-      var quantity       =  parseInt($(this).find('.quantity').val());
-      var unitprice      =  parseFloat($(this).find('.unitprice').val());
-      var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
-      var btw = (btw_percentage / 100 ) + 1;
-      rowtotal           =  quantity * unitprice * btw;
-      var currency = $('#invoice_currency option:selected').html();
-      var fixed_rowtotal = currency + rowtotal.toFixed(2);
-      if (parseFloat($(this).find('.unitprice').val())) {
-        $(this).find('.row_total').text(fixed_rowtotal);
-        total+=rowtotal;
-      }
-      else if (isNaN(rowtotal)) {
-        $(this).find('.row_total').text(currency);
-      }
-      else {
-        $(this).find('.row_total').text(currency);
+    $("#invoice_date_3i").change(function()
+    {
+      $('#factuurdatum_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
+    });
+    $("#invoice_date_2i").change(function()
+    {
+      $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
+    });
+    $("#invoice_date_1i").change(function()
+    {
+      $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+    });
+
+    // Output invoicedate on invoice body
+    $("#date_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
+
+    $("#invoice_date_3i").change(function()
+    {
+      $('#date_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
+    });
+    $("#invoice_date_2i").change(function()
+    {
+      $('#date_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
+    });
+    $("#invoice_date_1i").change(function()
+    {
+      $('#date_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+    });
+
+    // Output invoice duedate on invoice body
+
+    $("#duedate_output").text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) );
+
+    $("#invoice_duedate_3i").change(function()
+    {
+      $('#duedate_output').text(' ' +  ($(this).val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) ) ;
+    });
+    $("#invoice_duedate_2i").change(function()
+    {
+      $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_duedate_1i").val()) ) ;
+    });
+    $("#invoice_duedate_1i").change(function()
+    {
+      $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+    });
+
+    // add a row
+    $(document).ready(function() {
+      var counter = $('.products_tr').length;
+      $('#add_products').click(function() {
+        $('.products_tr:last').after('<tr class="products_tr"><td><input class="quantity form-control" type="text" value="" name="invoice[products_attributes]['+counter+'][quantity]"></td>' +
+            '<td><textarea class="form-control" name="invoice[products_attributes]['+counter+'][description]"></textarea></td>' +
+            '<td><input id="unitprice" class="unitprice form-control" type="text" name="invoice[products_attributes]['+counter+'][unitprice]"></td>' +
+            '<td class="row_total"></td>' +
+            '<td><select class="btw_percentage" name="invoice[products_attributes]['+counter+'][btw]"><option title="21%" value="21"> 21%</option> ' +
+            '<option title="6%" value="6"> 6%</option><option title="0%" value="0"> 0%</option></select></td>' +
+            '<td class="delete_tr"><a class="delete" title="Rij verwijderen"><span class="ti-close"></span></a></td></tr>');
+        counter ++;
+      });
+    });
+
+    // delete a row
+    $(document).on('click', '.delete_tr', function() {
+      $(this).closest('tr').remove();
+    });
+
+    // hide delete row button unless atleast rows > 1
+    $(document).ready(function() {
+      rowlength = $('.products_tr').length;
+      if(rowlength > 1) {
+        $('.delete_tr').show();
+      } else {
+        $('.delete_tr').hide();
       }
     });
-  });
 
-  // do row total calculation if unitprice value changes
-  $(document).on('change', '.unitprice', function(){
-    var total = 0,rowtotal = 0;
-    $('.products_tr').each(function(){
-      var quantity       =  parseInt($(this).find('.quantity').val());
-      var unitprice      =  parseFloat($(this).find('.unitprice').val());
-      var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
-      var btw = (btw_percentage / 100 ) + 1;
-      rowtotal           =  quantity * unitprice * btw;
-      var currency = $('#invoice_currency option:selected').html();
-      var fixed_rowtotal = currency + rowtotal.toFixed(2);
-      $(this).find('.row_total').text(fixed_rowtotal);
-      total+=rowtotal;
-    });
-  });
-  // do row total calculation if btw_percentage value changes
-  $(document).on('change', '.btw_percentage', function(){
-    var total = 0,rowtotal = 0;
-    $('.products_tr').each(function(){
-      var quantity       =  parseInt($(this).find('.quantity').val());
-      var unitprice      =  parseFloat($(this).find('.unitprice').val());
-      var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
-      var btw = (btw_percentage / 100 ) + 1;
-      rowtotal           =  quantity * unitprice * btw;
-      var currency = $('#invoice_currency option:selected').html();
-      var fixed_rowtotal = currency + rowtotal.toFixed(2);
-      $(this).find('.row_total').text(fixed_rowtotal);
-      total+=rowtotal;
-    });
-  });
-  // do row total calculation if currency value changes
-  $(document).on('change', '#invoice_currency', function() {
-    var total = 0,rowtotal = 0;
-    $('.products_tr').each(function(){
-      var quantity       =  parseInt($(this).find('.quantity').val());
-      var unitprice      =  parseFloat($(this).find('.unitprice').val());
-      var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
-      var btw = (btw_percentage / 100 ) + 1;
-      rowtotal           =  quantity * unitprice * btw;
-      var currency = $('#invoice_currency option:selected').html();
-      var fixed_rowtotal = currency + rowtotal.toFixed(2);
-      if (parseFloat($(this).find('.unitprice').val())) {
-        $(this).find('.row_total').text(fixed_rowtotal);
-        total+=rowtotal;
-      }
-      else if (isNaN(rowtotal)) {
-        $(this).find('.row_total').text(currency);
-      }
-      else {
-        $(this).find('.row_total').text(currency);
-      }
-    });
-  });
 
+    // hide add row button after 10 rows
     $(document).ready(function() {
       $('.products_tr').change(function() {
         var length = $('.products_tr').length;
         if (length > 10) {
           $('#add_products').hide();
+          alert('U kunt geen rijen meer toevoegen, maak een nieuwe factuur aan.')
         }
       })
     });
 
 
+    // do row total calculation if quantity value changes
+    $(document).on('change', '.quantity', function(){
+      var total = 0,rowtotal = 0;
+      $('.products_tr').each(function(){
+        var quantity       =  parseInt($(this).find('.quantity').val());
+        var unitprice      =  parseFloat($(this).find('.unitprice').val());
+        var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+        var btw = (btw_percentage / 100 ) + 1;
+        rowtotal           =  quantity * unitprice * btw;
+        var currency = $('#invoice_currency option:selected').html();
+        var fixed_rowtotal = currency + rowtotal.toFixed(2);
+        if (parseFloat($(this).find('.unitprice').val())) {
+          $(this).find('.row_total').text(fixed_rowtotal);
+          total+=rowtotal;
+        }
+        else if (isNaN(rowtotal)) {
+          $(this).find('.row_total').text(currency);
+        }
+        else {
+          $(this).find('.row_total').text(currency);
+        }
+      });
+    });
+
+    // do row total calculation if unitprice value changes
+    $(document).on('change', '.unitprice', function(){
+      var total = 0,rowtotal = 0;
+      $('.products_tr').each(function(){
+        var quantity       =  parseInt($(this).find('.quantity').val());
+        var unitprice      =  parseFloat($(this).find('.unitprice').val());
+        var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+        var btw = (btw_percentage / 100 ) + 1;
+        rowtotal           =  quantity * unitprice * btw;
+        var currency = $('#invoice_currency option:selected').html();
+        var fixed_rowtotal = currency + rowtotal.toFixed(2);
+        $(this).find('.row_total').text(fixed_rowtotal);
+        $('.unitprice').val($('.unitprice').val().replace(/,/g, '.'));
+        total+=rowtotal;
+      });
+    });
+    // do row total calculation if btw_percentage value changes
+    $(document).on('change', '.btw_percentage', function(){
+      var total = 0,rowtotal = 0;
+      $('.products_tr').each(function(){
+        var quantity       =  parseInt($(this).find('.quantity').val());
+        var unitprice      =  parseFloat($(this).find('.unitprice').val());
+        var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+        var btw = (btw_percentage / 100 ) + 1;
+        rowtotal           =  quantity * unitprice * btw;
+        var currency = $('#invoice_currency option:selected').html();
+        var fixed_rowtotal = currency + rowtotal.toFixed(2);
+        $(this).find('.row_total').text(fixed_rowtotal);
+        total+=rowtotal;
+      });
+    });
+  // do row total calculation if currency value changes
+    $(document).on('change', '#invoice_currency', function() {
+      var total = 0,rowtotal = 0;
+      $('.products_tr').each(function(){
+        var quantity       =  parseInt($(this).find('.quantity').val());
+        var unitprice      =  parseFloat($(this).find('.unitprice').val());
+        var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+        var btw = (btw_percentage / 100 ) + 1;
+        rowtotal           =  quantity * unitprice * btw;
+        var currency = $('#invoice_currency option:selected').html();
+        var fixed_rowtotal = currency + rowtotal.toFixed(2);
+        if (parseFloat($(this).find('.unitprice').val())) {
+          $(this).find('.row_total').text(fixed_rowtotal);
+          total+=rowtotal;
+        }
+        else if (isNaN(rowtotal)) {
+          $(this).find('.row_total').text(currency);
+        }
+        else {
+          $(this).find('.row_total').text(currency);
+        }
+        $('.euro-sign').text(currency);
+      });
+    });
+
+
+    $(document).on('change', '.row_total', function() {
+      this.text(this.text.replace(/./g, ','));
+    });
 </script>
 
 
