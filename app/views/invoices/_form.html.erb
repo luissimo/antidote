@@ -62,7 +62,6 @@
             </div><hr>
             <div class="row">
               <div class="col-sm-4">
-                    <h4>Klant:</h4>
                     <div class="well">
                       <address>
                         <%= f.fields_for :customer do |customer| %>
@@ -83,7 +82,6 @@
                     </div>
               </div>
               <div class="col-sm-4 pull-right">
-                <h4>Gegevens:</h4>
                 <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
                   <li>
                     <strong>BTW #:</strong> 233243444
@@ -141,7 +139,8 @@
                   <li>
                     <strong>Subtotaal:</strong>
                     <div class="field">
-                    <p id="invoice_subtotal"></p>
+                      <%= f.hidden_field :subtotal, class: 'invoice_subtotal' %>
+                      <p class="invoice_subtotal"></p>
                   </div>
                   </li>
                   <!-- <li>
@@ -150,13 +149,15 @@
                   <li>
                     <strong>BTW:</strong>
                     <div class="field">
-                      <p id="invoice_btwtotal"></p>
+                      <%= f.hidden_field :btwtotal, class: 'invoice_btwtotal' %>
+                      <p class="invoice_btwtotal"></p>
                     </div>
                   </li>
                   <li class="text-extra-large text-dark margin-top-15">
-                    <strong >Totaal:</strong>
+                    <strong>Totaal:</strong>
                     <div class="field">
-                      <p id="invoice_total"></p>
+                      <%= f.hidden_field :total, class: 'invoice_total' %>
+                      <p class="invoice_total"></p>
                     </div>
                   </li>
                 </ul>
@@ -166,8 +167,9 @@
             </div>
           </div>
           <div class="panel-footer">
+            <% @invoice.total = 0 if @invoice.total.nil? %> <% @invoice.duedate = Date.today + 2.weeks if @invoice.duedate.nil? %>
             <%= @invoice.footer.present? ? @invoice.footer : "We verzoeken u vriendelijk het bovenstaande bedrag van
-            € #{@invoice.total} voor #{@invoice.duedate} te voldoen op onze bankrekening onder vermelding van het
+            € #{'%.2f' % @invoice.total} voor #{@invoice.duedate.strftime('%d-%m-%Y')} te voldoen op onze bankrekening onder vermelding van het
             factuurnummer #{@invoice.number}. Voor vragen kunt u contact opnemen per e-mail." %>
           </div>
         </div>
@@ -186,10 +188,13 @@
     // });
 
     // Output invoicenumber on invoice.
-    $("#factuurnummer_input").change(function()
-    {
-      $('#factuurnummer_output').text($(this).val()) ;
+    $(document).ready(function() {
+      $("#factuurnummer_input").change(function()
+      {
+        $('#factuurnummer_output').text($(this).val()) ;
+      });
     });
+
 
     // Output invoicedate on invoice header
 
@@ -207,6 +212,8 @@
     {
       $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
     });
+
+
 
     // Output invoicedate on invoice body
     $("#date_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
@@ -241,7 +248,7 @@
       $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
     });
 
-    // add a row
+    // add a row to invoice
     $(document).ready(function() {
       var counter = $('.products_tr').length;
       $('#add_products').click(function() {
@@ -256,12 +263,13 @@
       });
     });
 
-    // delete a row
+    // delete a row from invoice
     $(document).on('click', '.delete_tr', function() {
       $(this).closest('tr').remove();
     });
 
-    // hide delete row button unless atleast rows > 1
+
+    // hide 'delete row button' on invoice unless atleast rows > 1
     $(document).ready(function() {
       rowlength = $('.products_tr').length;
       if(rowlength > 1) {
@@ -272,7 +280,7 @@
     });
 
 
-    // hide add row button after 10 rows
+    // hide 'add row button' after 10 rows
     $(document).ready(function() {
       $('.products_tr').change(function() {
         var length = $('.products_tr').length;
@@ -284,9 +292,9 @@
     });
 
 
-    // do row total calculation if quantity value changes
+    // do row total, subtotal, btwtotal & invoice total calculation if quantity value changes
     $(document).on('change', '.quantity', function(){
-      var total = 0,rowtotal = 0;
+      var total = 0,rowtotal = 0, invoice_btwtotaal = 0, invoice_subtotal = 0, invoice_total = 0;
       $('.products_tr').each(function(){
         var quantity       =  parseInt($(this).find('.quantity').val());
         var unitprice      =  parseFloat($(this).find('.unitprice').val());
@@ -296,7 +304,18 @@
         var currency = $('#invoice_currency option:selected').html();
         var fixed_rowtotal = currency + rowtotal.toFixed(2);
         if (parseFloat($(this).find('.unitprice').val())) {
+          var invoice_btw = rowtotal - (quantity * unitprice);
           $(this).find('.row_total').text(fixed_rowtotal);
+          invoice_btwtotaal += invoice_btw;
+          $('.invoice_btwtotal').val(invoice_btwtotaal.toFixed(2));
+          $('.invoice_btwtotal').text(currency + invoice_btwtotaal.toFixed(2));
+          var formula = (parseFloat($(this).find('.unitprice').val())) * (parseInt($(this).find('.quantity').val()));
+          invoice_subtotal += formula ;
+          $('.invoice_subtotal').val(invoice_subtotal.toFixed(2));
+          $('.invoice_subtotal').text(currency + invoice_subtotal.toFixed(2));
+          var invoice_total = invoice_subtotal + invoice_btwtotaal;
+          $('.invoice_total').val(invoice_total.toFixed(2));
+          $('.invoice_total').text(currency + invoice_total.toFixed(2));
           total+=rowtotal;
         }
         else if (isNaN(rowtotal)) {
@@ -308,10 +327,12 @@
       });
     });
 
-    // do row total calculation if unitprice value changes
+    // do row total, subtotal, btwtotal & invoice total calculation if unitprice value changes
     $(document).on('change', '.unitprice', function(){
-      var total = 0,rowtotal = 0;
+
+      var total = 0,rowtotal = 0, invoice_btwtotaal = 0, invoice_subtotal = 0, invoice_total = 0;
       $('.products_tr').each(function(){
+        $(this).find('.unitprice').val($(this).find('.unitprice').val().replace(/,/g, '.'));
         var quantity       =  parseInt($(this).find('.quantity').val());
         var unitprice      =  parseFloat($(this).find('.unitprice').val());
         var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
@@ -319,14 +340,24 @@
         rowtotal           =  quantity * unitprice * btw;
         var currency = $('#invoice_currency option:selected').html();
         var fixed_rowtotal = currency + rowtotal.toFixed(2);
+        var invoice_btw = rowtotal - (quantity * unitprice);
         $(this).find('.row_total').text(fixed_rowtotal);
-        $('.unitprice').val($('.unitprice').val().replace(/,/g, '.'));
+        invoice_btwtotaal += invoice_btw;
+        $('.invoice_btwtotal').val(invoice_btwtotaal.toFixed(2));
+        $('.invoice_btwtotal').text(currency + invoice_btwtotaal.toFixed(2));
+        var formula = (parseFloat($(this).find('.unitprice').val())) * (parseInt($(this).find('.quantity').val()));
+        invoice_subtotal += formula ;
+        $('.invoice_subtotal').val(invoice_subtotal.toFixed(2));
+        $('.invoice_subtotal').text(currency + invoice_subtotal.toFixed(2));
+        var invoice_total = invoice_subtotal + invoice_btwtotaal;
+        $('.invoice_total').val(invoice_total.toFixed(2));
+        $('.invoice_total').text(currency + invoice_total.toFixed(2));
         total+=rowtotal;
       });
     });
-    // do row total calculation if btw_percentage value changes
+    // do row total, subtotal, btwtotal & invoice total calculation if btw_percentage value changes
     $(document).on('change', '.btw_percentage', function(){
-      var total = 0,rowtotal = 0;
+      var total = 0,rowtotal = 0, invoice_btwtotaal = 0, invoice_subtotal = 0, invoice_total = 0;
       $('.products_tr').each(function(){
         var quantity       =  parseInt($(this).find('.quantity').val());
         var unitprice      =  parseFloat($(this).find('.unitprice').val());
@@ -335,13 +366,24 @@
         rowtotal           =  quantity * unitprice * btw;
         var currency = $('#invoice_currency option:selected').html();
         var fixed_rowtotal = currency + rowtotal.toFixed(2);
+        var invoice_btw = rowtotal - (quantity * unitprice);
         $(this).find('.row_total').text(fixed_rowtotal);
+        invoice_btwtotaal += invoice_btw;
+        $('.invoice_btwtotal').val(invoice_btwtotaal.toFixed(2));
+        $('.invoice_btwtotal').text(currency + invoice_btwtotaal.toFixed(2));
+        var formula = (parseFloat($(this).find('.unitprice').val())) * (parseInt($(this).find('.quantity').val()));
+        invoice_subtotal += formula ;
+        $('.invoice_subtotal').val(invoice_subtotal.toFixed(2));
+        $('.invoice_subtotal').text(currency + invoice_subtotal.toFixed(2));
+        var invoice_total = invoice_subtotal + invoice_btwtotaal;
+        $('.invoice_total').val(invoice_total.toFixed(2));
+        $('.invoice_total').text(currency + invoice_total.toFixed(2));
         total+=rowtotal;
       });
     });
-  // do row total calculation if currency value changes
-    $(document).on('change', '#invoice_currency', function() {
-      var total = 0,rowtotal = 0;
+  // do row total, subtotal, btwtotal & invoice total calculation if currency value changes
+    $(document).on('change', '#invoice_currency', function Calculate() {
+      var total = 0,rowtotal = 0, invoice_btwtotaal = 0, invoice_subtotal = 0, invoice_total = 0;
       $('.products_tr').each(function(){
         var quantity       =  parseInt($(this).find('.quantity').val());
         var unitprice      =  parseFloat($(this).find('.unitprice').val());
@@ -351,7 +393,18 @@
         var currency = $('#invoice_currency option:selected').html();
         var fixed_rowtotal = currency + rowtotal.toFixed(2);
         if (parseFloat($(this).find('.unitprice').val())) {
+          var invoice_btw = rowtotal - (quantity * unitprice);
           $(this).find('.row_total').text(fixed_rowtotal);
+          invoice_btwtotaal += invoice_btw;
+          $('.invoice_btwtotal').val(currency + invoice_btwtotaal.toFixed(2));
+          $('.invoice_btwtotal').text(currency + invoice_btwtotaal.toFixed(2));
+          var formula = (parseFloat($(this).find('.unitprice').val())) * (parseInt($(this).find('.quantity').val()));
+          invoice_subtotal += formula ;
+          $('.invoice_subtotal').val(invoice_subtotal.toFixed(2));
+          $('.invoice_subtotal').text(currency + invoice_subtotal.toFixed(2));
+          var invoice_total = invoice_subtotal + invoice_btwtotaal;
+          $('.invoice_total').val(invoice_total.toFixed(2));
+          $('.invoice_total').text(currency + invoice_total.toFixed(2));
           total+=rowtotal;
         }
         else if (isNaN(rowtotal)) {
@@ -364,10 +417,53 @@
       });
     });
 
-
-    $(document).on('change', '.row_total', function() {
-      this.text(this.text.replace(/./g, ','));
+    $(document).ready(function() {
+      var total = 0,rowtotal = 0, invoice_btwtotaal = 0, invoice_subtotal = 0, invoice_total = 0;
+      $('.products_tr').each(function(){
+        var quantity       =  parseInt($(this).find('.quantity').val());
+        var unitprice      =  parseFloat($(this).find('.unitprice').val());
+        var btw_percentage =  parseInt($(this).find('.btw_percentage option:selected').val());
+        var btw = (btw_percentage / 100 ) + 1;
+        rowtotal           =  quantity * unitprice * btw;
+        var currency = $('#invoice_currency option:selected').html();
+        var fixed_rowtotal = currency + rowtotal.toFixed(2);
+        if (parseFloat($(this).find('.unitprice').val())) {
+          var invoice_btw = rowtotal - (quantity * unitprice);
+          $(this).find('.row_total').text(fixed_rowtotal);
+          invoice_btwtotaal += invoice_btw;
+          $('.invoice_btwtotal').val(invoice_btwtotaal.toFixed(2));
+          $('.invoice_btwtotal').text(currency + invoice_btwtotaal.toFixed(2));
+          var formula = (parseFloat($(this).find('.unitprice').val())) * (parseInt($(this).find('.quantity').val()));
+          invoice_subtotal += formula ;
+          $('.invoice_subtotal').val(invoice_subtotal.toFixed(2));
+          $('.invoice_subtotal').text(currency + invoice_subtotal.toFixed(2));
+          var invoice_total = invoice_subtotal + invoice_btwtotaal;
+          $('.invoice_total').val(invoice_total.toFixed(2));
+          $('.invoice_total').text(currency + invoice_total.toFixed(2));
+          total+=rowtotal;
+        }
+        else if (isNaN(rowtotal)) {
+          $(this).find('.row_total').text(currency);
+        }
+        else {
+          $(this).find('.row_total').text(currency);
+        }
+      });
     });
+//  replace dot with comma in row_total
+//    $(document).on('change', '.row_total', function() {
+//      this.text(this.text.replace(/./g, ','));
+//    });
+
+
+
+
+//    $(document).on('change', '.btw_percentage', function() {
+//      var invoice_btwtotal = 0;
+//      var currency = $('#invoice_currency option:selected').html();
+//      $('.row_total').each(function() {})
+//    });
+
 </script>
 
 

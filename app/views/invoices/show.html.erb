@@ -1,5 +1,126 @@
 <p id="notice"><%= notice %></p>
 
+<div class="col-md-8">
+  <div class="panel panel-white">
+    <div class="panel-body">
+      <div class="invoice">
+        <div class="row invoice-logo">
+          <div class="col-sm-6">
+            <img alt="" src="">
+          </div>
+          <div class="col-sm-6">
+            <p class="text-dark">
+              <strong id="factuurnummer_output"></strong> <small class="text-light" id="factuurdatum_output"></small>
+            </p>
+          </div>
+        </div><hr>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="well">
+              <address>
+                    <div class="field">
+                      <strong>Bedrijfsnaam: </strong><%= @invoice.customer.company_name %>
+                    </div>
+                    <div class="field">
+                      <strong>Adres: </strong><%= @invoice.customer.address_line_1 %>
+                    </div>
+                    <div class="field">
+                      <strong>Postcode & plaats: </strong><%= @invoice.customer.zip_code %>
+                    </div>
+              </address>
+            </div>
+          </div>
+          <div class="col-sm-4 pull-right">
+            <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
+              <li>
+                <strong>BTW #:</strong> 233243444
+              </li>
+              <li>
+                <strong>Bedrijfsnaam:</strong> Company B.V
+              </li>
+              <li>
+                <strong>IBAN:</strong> 1233F4343ABCDEW
+              </li>
+              <li>
+                <strong>Factuurdatum:</strong> <em id="date_output">01/01/2016</em>
+              </li>
+              <li>
+                <strong>Te betalen voor:</strong><em id="duedate_output"> 11/02/2016 </em>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th class="hidden-480"> Hoeveelheid </th>
+                <th class="hidden-480"> Beschrijving </th>
+                <th class="hidden-480"> Bedrag </th>
+                <th class="hidden-480"> Totaal </th>
+                <th class="hidden-480"> Btw(%) </th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @invoice.products.each do |product| %>
+               <% if product.persisted? %>
+               <tr class="products_tr">
+                 <td> <%= product.quantity %>x </td>
+                 <td> <%= product.description %> </td>
+                 <td> <%= @invoice.currency %><%= '%.2f' % product.unitprice %> </td>
+                 <% btw = (product.btw.to_i / 100 ) + 1 %>
+                 <td class="row_total"><%= @invoice.currency %><%= '%.2f' % (product.quantity * product.unitprice) * (btw) %></td>
+                 <td> <%= product.btw.to_i %>% </td>
+               </tr>
+               <% end %>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 invoice-block">
+            <ul class="list-unstyled amounts text-small">
+              <li>
+                <strong>Subtotaal:</strong>
+                <div class="field">
+                  <%= "#{@invoice.currency}#{@invoice.subtotal}" %>
+                  <p class="invoice_subtotal"></p>
+                </div>
+              </li>
+              <!-- <li>
+                 <strong>Discount:</strong>
+               </li> -->
+              <li>
+                <strong>BTW:</strong>
+                <div class="field">
+                  <%="#{@invoice.currency}#{@invoice.btwtotal}" %>
+                  <p class="invoice_btwtotal"></p>
+                </div>
+              </li>
+              <li class="text-extra-large text-dark margin-top-15">
+                <strong>Totaal:</strong>
+                <div class="field">
+                  <%="#{@invoice.currency}#{@invoice.total}" %>
+                  <p class="invoice_total"></p>
+                </div>
+              </li>
+            </ul>
+            <br>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <% @invoice.total = 0 if @invoice.total.nil? %><% @invoice.duedate = Date.today + 2.weeks if @invoice.duedate.nil? %>
+        <%= @invoice.footer.present? ? @invoice.footer : "We verzoeken u vriendelijk het bovenstaande bedrag van
+            €#{'%.2f' % @invoice.total} voor #{@invoice.duedate.strftime('%d-%m-%Y')} te voldoen op onze bankrekening onder vermelding van het
+            factuurnummer #{@invoice.number}. Voor vragen kunt u contact opnemen per e-mail." %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <p>
   <strong>Number:</strong>
   <%= @invoice.number %>
