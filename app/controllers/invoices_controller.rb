@@ -15,8 +15,10 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   def new
     @invoice = Invoice.new
+    @invoice.build_company
     @invoice.products.build
     @invoice.build_customer
+
   end
 
   # GET /invoices/1/edit
@@ -73,7 +75,7 @@ class InvoicesController < ApplicationController
     def invoice_params
       params.require(:invoice).permit(:number, :currency, :date, :duedate, :btwtotal,
                                       :subtotal, :total, :footer, customer_attributes: [:id, :company_name, :address_line_1, :zip_code, :_destroy],
-                                      companies_attributes: [:id, :btw_number, :iban_number, :kvk_number, :company_name, :_destroy],
+                                      company_attributes: [:id, :btw_number, :iban_number, :kvk_number, :company_name, :_destroy],
                                       products_attributes: [:id, :quantity, :description, :unitprice, :btw, :total])
     end
 end

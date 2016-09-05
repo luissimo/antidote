@@ -18,26 +18,22 @@
       <div class="panel panel-white">
         <div class="panel-body">
             <div class="field">
-              <%= f.label :Factuurnummer %><br>
+              <%= f.label :Factuurnummer, class: 'text-bold text-large' %><br>
               <%= f.text_field :number, placeholder: '2016-0001', id: 'factuurnummer_input', class: 'form-control' %>
             </div>
             <div class="field">
-              <%= f.label :Munteenheid %><br>
+              <%= f.label :Munteenheid, class: 'text-bold text-large' %><br>
               <%= f.select(:currency, [[' €', '€', title: 'Euro', value: 'EURO'], [' $', '$', title: 'US Dollar', value: 'USD'],
                                        [' £', '£', title: 'GBP Pound', value: 'GBP']], {}, {id: 'invoice_currency'}) %>
             </div>
             <div class="field">
-              <%= f.label :factuurdatum %><br>
+              <%= f.label :factuurdatum, class: 'text-bold text-large' %><br>
               <%= f.date_select :date, class: 'form-control' %>
             </div>
             <div class="field">
-              <%= f.label 'te betalen voor' %><br>
+              <%= f.label 'te betalen voor', class: 'text-bold text-large' %><br>
               <%= f.date_select :duedate, class: 'form-control' %>
-            </div>
-            <div class="field">
-              <%= f.label :footer %><br>
-              <%= f.text_area :footer, id: 'footer-text', class: 'form-control' %>
-            </div>
+            </div><br/>
             <div class="actions">
               <%= f.submit 'Opslaan', class: 'btn btn-primary btn-success' %>
               <%= link_to 'Annuleren', invoices_path, class: 'btn btn-primary btn-info' %>
@@ -56,7 +52,7 @@
               </div>
               <div class="col-sm-6">
                 <p class="text-dark">
-                  <strong id="factuurnummer_output"></strong> <small class="text-light" id="factuurdatum_output"></small>
+                  <strong class="factuurnummer_output"><%= @invoice.number %></strong> <small class="text-light factuurdatum_output"></small>
                 </p>
               </div>
             </div><hr>
@@ -83,21 +79,26 @@
               </div>
               <div class="col-sm-4 pull-right">
                 <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
+                 <%= f.fields_for :company do |company| %>
                   <li>
-                    <strong>BTW #:</strong> 233243444
+                    <strong>BTW:</strong><br/>
+                    <%= company.text_field :btw_number %>
                   </li>
                   <li>
-                    <strong>Bedrijfsnaam:</strong> Company B.V
+                    <strong>Bedrijfsnaam:</strong><br/>
+                    <%= company.text_field :company_name %>
                   </li>
                   <li>
-                    <strong>IBAN:</strong> 1233F4343ABCDEW
+                    <strong>IBAN:</strong><br/>
+                    <%= company.text_field :iban_number %>
                   </li>
                   <li>
                     <strong>Factuurdatum:</strong> <em id="date_output">01/01/2016</em>
                   </li>
                   <li>
-                    <strong>Te betalen voor:</strong><em id="duedate_output"> 11/02/2016 </em>
+                    <strong>Te betalen voor:</strong><em class="duedate_output"> 11/02/2016 </em>
                   </li>
+                 <% end %>
                 </ul>
               </div>
             </div>
@@ -167,10 +168,9 @@
             </div>
           </div>
           <div class="panel-footer">
-            <% @invoice.total = 0 if @invoice.total.nil? %> <% @invoice.duedate = Date.today + 2.weeks if @invoice.duedate.nil? %>
-            <%= @invoice.footer.present? ? @invoice.footer : "We verzoeken u vriendelijk het bovenstaande bedrag van
-            € #{'%.2f' % @invoice.total} voor #{@invoice.duedate.strftime('%d-%m-%Y')} te voldoen op onze bankrekening onder vermelding van het
-            factuurnummer #{@invoice.number}. Voor vragen kunt u contact opnemen per e-mail." %>
+            We verzoeken u vriendelijk het bovenstaande bedrag van
+            <span class="invoice_total">€0.00</span> voor <span class="duedate_output"></span> te voldoen op onze bankrekening onder vermelding van het
+            factuurnummer <span class="factuurnummer_output"></span>. Voor vragen kunt u contact opnemen per e-mail.
           </div>
         </div>
       </div>
@@ -191,26 +191,26 @@
     $(document).ready(function() {
       $("#factuurnummer_input").change(function()
       {
-        $('#factuurnummer_output').text($(this).val()) ;
+        $('.factuurnummer_output').text($(this).val()) ;
       });
     });
 
 
     // Output invoicedate on invoice header
 
-    $("#factuurdatum_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
+    $(".factuurdatum_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
 
     $("#invoice_date_3i").change(function()
     {
-      $('#factuurdatum_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
+      $('.factuurdatum_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
     });
     $("#invoice_date_2i").change(function()
     {
-      $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
+      $('.factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
     });
     $("#invoice_date_1i").change(function()
     {
-      $('#factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+      $('.factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
     });
 
 
@@ -233,19 +233,19 @@
 
     // Output invoice duedate on invoice body
 
-    $("#duedate_output").text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) );
+    $(".duedate_output").text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) );
 
     $("#invoice_duedate_3i").change(function()
     {
-      $('#duedate_output').text(' ' +  ($(this).val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) ) ;
+      $('.duedate_output').text(' ' +  ($(this).val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) ) ;
     });
     $("#invoice_duedate_2i").change(function()
     {
-      $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_duedate_1i").val()) ) ;
+      $('.duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_duedate_1i").val()) ) ;
     });
     $("#invoice_duedate_1i").change(function()
     {
-      $('#duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+      $('.duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
     });
 
     // add a row to invoice
@@ -417,6 +417,7 @@
       });
     });
 
+    // do row total, subtotal, btwtotal & invoice total calculation when DOM is ready
     $(document).ready(function() {
       var total = 0,rowtotal = 0, invoice_btwtotaal = 0, invoice_subtotal = 0, invoice_total = 0;
       $('.products_tr').each(function(){
@@ -450,19 +451,13 @@
         }
       });
     });
+
+
 //  replace dot with comma in row_total
 //    $(document).on('change', '.row_total', function() {
 //      this.text(this.text.replace(/./g, ','));
 //    });
 
-
-
-
-//    $(document).on('change', '.btw_percentage', function() {
-//      var invoice_btwtotal = 0;
-//      var currency = $('#invoice_currency option:selected').html();
-//      $('.row_total').each(function() {})
-//    });
 
 </script>
 
