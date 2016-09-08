@@ -1,21 +1,3 @@
 // Place all the styles related to the Invoices controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-@media print {
-  .hide_this {
-   display: none;
-  };
-
-  img {
-    max-width: 500px;
-  };
-
-  .print_invoice {
-    margin: 0.5cm 2cm 50cm 2cm;
-  };
-}
-
-@media screen {
-
-}
