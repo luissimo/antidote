@@ -1,0 +1,14 @@
+<div class="nested-fields">
+  <div class="field">
+    <%= f.label 'Bedrijfsnaam ontvanger' %><br/>
+    <%= f.text_field :company_name, placeholder: 'bedrijfsnaam', class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= f.label 'Adres ontvanger' %><br>
+    <%= f.text_field :address_line_1, placeholder: 'adres ontvanger', class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= f.label 'Postcode & stad' %><br>
+    <%= f.text_field :zip_code, placeholder: '1234AB Rotterdam', class: 'form-control' %>
+  </div>
+</div>

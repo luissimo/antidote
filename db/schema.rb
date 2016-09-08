@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713220956) do
+ActiveRecord::Schema.define(version: 20160905115049) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "company_name"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20160713220956) do
     t.string   "bank_holder_name"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "invoice_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -49,14 +50,20 @@ ActiveRecord::Schema.define(version: 20160713220956) do
     t.string   "bank_holder_name"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "invoice_id"
   end
 
-  create_table "factuurs", force: :cascade do |t|
-    t.decimal  "amount",     precision: 15, scale: 2, default: 0.0
+  create_table "invoices", force: :cascade do |t|
+    t.string   "number"
     t.string   "currency"
     t.date     "date"
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.date     "duedate"
+    t.decimal  "btwtotal",   precision: 20, scale: 2
+    t.decimal  "subtotal",   precision: 20, scale: 2
+    t.decimal  "total",      precision: 20, scale: 2
+    t.text     "footer"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -68,6 +75,7 @@ ActiveRecord::Schema.define(version: 20160713220956) do
     t.decimal  "discount",    precision: 3,  scale: 2
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
+    t.integer  "invoice_id"
   end
 
 end

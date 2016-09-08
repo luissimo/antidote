@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: MyString
+  currency: MyString
+  date: 2016-07-24
+  duedate: 2016-07-24
+  btwtotal: 9.99
+  subtotal: 9.99
+  total: 9.99
+  footer: MyText
+
+two:
+  number: MyString
+  currency: MyString
+  date: 2016-07-24
+  duedate: 2016-07-24
+  btwtotal: 9.99
+  subtotal: 9.99
+  total: 9.99
+  footer: MyText

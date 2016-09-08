@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-white">
+      <div class="panel-body">
+        <h5 class="over-titel margin-bottom-15">Mijn <span class="text-bold">facturen</span></h5>
+        <div class="alert alert-info">Hier ziet u een overzicht van al uw facturen.</div>
+        <%= link_to ' Nieuwe factuur', new_invoice_path, class: 'btn btn-primary btn-lg pull-right fa fa-arrow-circle-down' %><br/><br/>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Factuurnummer</th>
+              <th>Munteenheid</th>
+              <th>Datum</th>
+              <th>Te betalen voor</th>
+              <th>Totale btw bedrag</th>
+              <th>Subtotaal</th>
+              <th>Totaal</th>
+              <th colspan="3"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% @invoices.each do |invoice| %>
+                <tr>
+                  <td><%= invoice.number %></td>
+                  <td><%= invoice.currency %></td>
+                  <td><%= invoice.date.strftime('%d-%m-%Y') %></td>
+                  <td><%= invoice.duedate.strftime('%d-%m-%Y') %></td>
+                  <td><%= invoice.currency %><%= '%.2f' % invoice.btwtotal %></td>
+                  <td><%= invoice.currency %><%= '%.2f' % invoice.subtotal %></td>
+                  <td><%= invoice.currency %><%= '%.2f' % invoice.total %></td>
+                  <td><%= link_to '', invoice, class: 'btn btn-primary btn-info glyphicon glyphicon-search' %>
+                      <%= link_to 'Aanpassen', edit_invoice_path(invoice), data: { confirm: 'Weet u zeker dat u een factuur wilt aanpassen?' },
+                                  class: 'btn btn-primary btn-success' %>
+                      <%= link_to 'X', invoice, method: :delete, data: { confirm: 'Weet u het zeker?' },
+                          class: 'btn btn-primary btn-danger' %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+

@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :invoices, path: :facturen
   resources :products, path: :producten
   resources :customers, path: :klanten
   resources :companies, path: :instellingen
 
- root 'pages#profiel'
+  root 'pages#profiel'
 
 
-## https://vast-fortress-16771.herokuapp.com/ | https://git.heroku.com/vast-fortress-16771.git
+## https://vast-fortress-16771.herokuapp.com/
 
 end
