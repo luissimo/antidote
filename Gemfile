@@ -15,8 +15,8 @@ gem 'twitter-bootstrap-rails'
 gem 'therubyracer'
 gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 gem 'cocoon', '~> 1.2', '>= 1.2.9'
+gem 'devise'
 ## gem 'figaro' <-- env variables
-## gem 'devise'
 ## gem 'watir-webdriver' <-- advanced browser stuff
 ## gem 'mail_form' <-- contact page
 ## gem 'sitemap_generator' <-- sitemap [google, bing]

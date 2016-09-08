@@ -1,0 +1,2 @@
+module OqbaHelper
+end
