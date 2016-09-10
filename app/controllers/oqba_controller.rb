@@ -1,4 +1,5 @@
 class OqbaController < ApplicationController
+ layout 'oqba_layout'
 
   def index
   end
