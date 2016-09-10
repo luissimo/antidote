@@ -1,4 +1,5 @@
 <div class="breadcrumb-wrapper">
+  <%=  %>
   <h4 class="mainTitle no-margin">Welkom bij OQ Business administrations</h4>
   <span class="mainDescription">overview &amp; stats </span>
   <ul class="pull-right breadcrumb">
@@ -19,18 +20,15 @@
         <div class="panel-body no-padding">
           <div class="block text-dark text-center">
             <span class="counter text-bold text-white">Diensten</span><hr/>
-              <ul class='text-sm text-black'>
-                <li>Administratie</li>
-                <li>begeleiding</li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-              </ul>
-              Administratie, begeleiding startende ondernemers,
-              jaarrekening, controle/begeleiding boekhouding, aangifte omzetbelasting & inkomstenbelasting
-          </div><br><br/><br/><br/><br/>
+              <span class='text-sm text-white center-block'>
+                Administratie,
+                Begeleiding startende ondernemers,
+                Jaarrekening,
+                Aangifte omzetbelasting,
+                Aangifte inkomstenbelasting,
+                Controle & begeleiding boekhouding,
+              </span>
+          </div><br/>
           <%= button_to('Lees verder', diensten_path, class: 'btn btn-md btn-red center-block') %>
         </div>
       </div>
@@ -47,7 +45,7 @@
               Wij willen onze  doelen bereiken door een hechte band te creëren met onze relaties.
               Het hoeft niet altijd om geld te gaan! De relaties kunnen altijd direct contact opnemen voor advies.
             </span>
-          </div><br><br/><br/><br/><br/>
+          </div><br>
           <%= button_to('Meer te weten komen..', over_ons_path, class: 'btn btn-md btn-red center-block') %>
         </div>
       </div>
@@ -62,9 +60,9 @@
             <span class="counter text-bold text-white">Pakketten</span><hr/>
             <span class="text-sm text-white">
               Wilt u een ZZP SIMPEL PAKKET, ZZP PLUS PAKKET,
-              V.O.F PAKKET of toch net iets anders? bekijk de mogelijkheden..
+              V.O.F PAKKET of toch net iets anders? bekijk de mogelijkheden.
             </span>
-          </div><br><br/><br/><br/><br/><br/>
+          </div><br><br/>
           <%= button_to('Bekijk de mogelijkheden', pakketten_path, class: 'btn btn-md btn-red center-block') %>
         </div>
       </div>
@@ -72,16 +70,16 @@
     <div class="col-lg-3 col-md-6 no-padding">
       <div class="panel panel-white panel-carousel height-300 no-radius no-border">
         <div class="panel-heading padding-5 padding-bottom-0">
-          <span class="triangle-top-right text-white pull-right"></span>
+          <span class="triangle-top-right text-light pull-right"></span>
         </div>
         <div class="panel-body no-padding">
           <div class="block text-dark text-center">
             <span class="counter text-bold text-black">Contact</span><hr/>
             <span class="text-sm text-black">
-              Heeft u nog vragen dan kunt altijd contact opnemen met ons.
+              Heeft u nog vragen of opmerkingen aarzel dan niet om geheel vrijblijvend contact op te nemen met ons. U kunt ons 24/7 bereiken, zowel telefonisch als per e-mail.
             </span>
-          </div><br><br/><br/><br/><br/><br/><br/>
-          <%= button_to('Bekijk de mogelijkheden', pakketten_path, class: 'btn btn-md btn-red center-block') %>
+          </div><br>
+          <%= button_to('Neem contact op', contact_path, class: 'btn btn-md btn-red center-block') %>
         </div>
       </div>
     </div>
@@ -90,7 +88,7 @@
 <!-- end: FIRST SECTION -->
 
 
-<!-- start: MIJN OQBA SECTION -->
+<!-- start: MIJN oqba SECTION -->
 <div class="container-fluid container-fullw padding-bottom-10">
   <div class="row no-margin">
     <div class="col-lg-3 col-md-6 no-padding">
@@ -228,11 +226,11 @@
     </div>
     <div class="row">
       <div class='col-md-12'>
-        <%= button_to('Mijn OQBA', invoices_path, class: 'btn btn-red btn-block') %>
+        <%= button_to('Ga naar Mijn OQBA', invoices_path, class: 'btn btn-red btn-block') %>
       </div>
     </div><br/><br/>
   </div>
 </div>
-<!-- end: MIJN OQBA SECTION -->
+<!-- end: MIJN oqba SECTION -->
 
 

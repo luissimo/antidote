@@ -412,7 +412,7 @@ span[role="slider"] {
 }
 .navbar .navbar-header a, .navbar .navbar-header button {
   line-height: 60px;
-  height: 60px;
+  height: 100px;
 }
 .navbar .navbar-header button {
   background: none;
@@ -2459,7 +2459,7 @@ ul.sub-menu li ul.sub-menu li ul.sub-menu li a {
 .main-content {
   min-height: 100%;
   position: relative;
-  background: #f7f7f8;
+  background: black;
 }
 .main-content .container {
   max-width: none !important;
@@ -3746,7 +3746,6 @@ ul.sub-menu li ul.sub-menu li ul.sub-menu li a {
 /* ---------------------------------------------------------------------- */
 .horizontal-menu {
   position: absolute;
-  top: 60px;
   background: #ffffff;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   padding: 0;
@@ -3754,6 +3753,13 @@ ul.sub-menu li ul.sub-menu li ul.sub-menu li a {
   z-index: 1088;
   height: auto;
 }
+
+.btn-custom {
+  line-height: 1.7;
+  padding: 10px 30px;
+  font-size: 18px;
+}
+
 @media (min-width: 992px) {
   .horizontal-menu {
     max-height: 50px;
@@ -15461,7 +15467,7 @@ figure.effect-goliath:hover p {
 }
 @media (min-width: 992px) {
   .lyt-3 .breadcrumb-wrapper, .lyt-4 .breadcrumb-wrapper {
-    margin: 30px 15px 0;
+    margin: -40px 15px 0;
   }
 }
 .breadcrumb-wrapper .breadcrumb {
