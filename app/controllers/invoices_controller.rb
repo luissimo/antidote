@@ -5,7 +5,8 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.json
   def index
-    @invoices = Invoice.all
+    @invoices =  current_user.invoices.all
+    flash.now[:notice] = 'U heeft nog geen facturen' if @invoices.empty?
   end
 
   # GET /invoices/1
@@ -15,11 +16,10 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/new
   def new
-    @invoice = Invoice.new
+    @invoice = current_user.invoices.new
     @invoice.build_company
     @invoice.products.build
     @invoice.build_customer
-
   end
 
   # GET /invoices/1/edit
@@ -29,7 +29,7 @@ class InvoicesController < ApplicationController
   # POST /invoices
   # POST /invoices.json
   def create
-    @invoice = Invoice.new(invoice_params)
+    @invoice = current_user.invoices.new(invoice_params)
     
     respond_to do |format|
       if @invoice.save
@@ -69,7 +69,7 @@ class InvoicesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
-      @invoice = Invoice.find(params[:id])
+      @invoice = current_user.invoices.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

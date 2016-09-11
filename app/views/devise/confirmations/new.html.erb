@@ -21,12 +21,10 @@
               </div><br/>
               <p class="text-small float-left">
                 Heeft u uw account al bevestigd? -  <%- if controller_name != 'sessions' %>
-                    <%= link_to "Inloggen", new_session_path(resource_name) %><br />
-                <% end -%>
-              </p>
-              <p class="text-small">
-                <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-                    <%= link_to "Geen bevestigingsemail ontvangen?", new_confirmation_path(resource_name) %><br />
+                    <%= link_to "Inloggen", new_session_path(resource_name) %>
+                <% end -%> |
+                Nog geen account? -  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+                    <%= link_to "Registreren", new_registration_path(resource_name) %>
                 <% end -%>
               </p>
             </form>

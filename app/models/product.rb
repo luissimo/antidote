@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
 
- belongs_to :invoice
+ belongs_to :invoice, dependent: :destroy
+ belongs_to :user, dependent: :destroy
 
   # btw calculation
   #def btw_calc

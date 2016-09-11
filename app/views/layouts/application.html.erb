@@ -28,14 +28,14 @@
 <body>
 <div id="app" class="lyt-4">
   <%= render 'shared/header' %>
- <div class="container-fluid container-fullw">
-   <div class="main-content"><br/>
+  <div class="container-fluid container-fullw">
+   <div class="main-content">
      <% if notice %>
          <p class="notice alert-info text-center"><%= notice %></p>
      <% elsif alert %>
          <p class="alert alert-danger text-center"><%= alert %></p>
      <% end %>
-        <%= yield %>
+     <%= yield %>
    </div>
  </div>
 <%= render 'shared/footer' %>
