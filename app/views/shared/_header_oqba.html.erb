@@ -4,7 +4,7 @@
     <div class="horizontal-menu-wrapper">
       <div class="horizontal-nav-container">
         <ul class="nav navbar-nav no-border">
-          <li class="active">
+          <li class="fade in active">
             <a href="/"> <div class="lettericon" data-text="Home" data-size="sm" data-char-count="2" data-color="auto"></div> <span> Home </span> </a>
           </li>
           <li>
@@ -17,12 +17,12 @@
             <a href="/pakketten"> <div class="lettericon" data-text="Pakketten" data-size="sm" data-char-count="2" data-color="auto"></div> <span> Pakketten </span> </a>
           </li>
           <li>
-            <a href="/contact"> <div class="lettericon" data-text="Contact" data-size="sm" data-char-count="2" data-color="auto"></div> <span> Contact </span> </a>
+            <a href="/contacts" data-no-turbolink> <div class="lettericon" data-text="Contact" data-size="sm" data-char-count="2" data-color="auto"></div> <span> Contact </span> </a>
           </li>
         </ul>
 
         <div class="nav navbar-nav navbar-right">
-           <%= link_to "<span class='fa fa-lock'></span>  Mijn OQBA".html_safe, invoices_path, class: 'btn btn-lg btn-azure btn-custom' %>
+           <%= link_to "<span class='fa fa-lock'></span>  Mijn OQBA".html_safe, invoices_path, class: 'btn btn-lg btn-blue btn-custom' %>
         </div>
       </div>
       <!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
@@ -34,7 +34,6 @@
     </div>
   </div><br/>
   <!-- end: HORIZONTAL MENU -->
-  <!-- end: TOP NAVBAR -->
-
 </div>
+
 

@@ -13,7 +13,6 @@ class OqbaController < ApplicationController
   def packages
   end
 
-  def contact
-  end
+
 
 end
