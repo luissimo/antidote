@@ -1,10 +1,17 @@
 <div class="app-content hide_this">
+  <!-- start: NAVBAR HEADER -->
+   <div class="navbar-header">
+     <button href="javascript:void(0)" class="menu-mobile-toggler btn no-radius btn-block hidden-md hidden-lg" id="horizontal-menu-toggler" data-toggle="collapse" data-target=".horizontal-menu">
+       <i class="fa fa-bars"></i>
+     </button>
+   </div>
+  <!-- end: NAVBAR HEADER -->
   <!-- start: HORIZONTAL MENU -->
   <div class="navbar navbar-default horizontal-menu collapse">
     <div class="horizontal-menu-wrapper">
-      <div class="horizontal-nav-container">
+      <div class="horizontal-nav-container navbar-collpase">
         <ul class="nav navbar-nav no-border">
-          <li class="fade in active">
+          <li class="fade in">
             <a href="/"> <div class="lettericon" data-text="Home" data-size="sm" data-char-count="2" data-color="auto"></div> <span> Home </span> </a>
           </li>
           <li>
@@ -27,13 +34,11 @@
       </div>
       <!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
       <div class="close-handle visible-xs-block visible-sm-block menu-toggler" data-toggle="collapse" data-target=".horizontal-menu">
-        <div class="arrow-left"></div>
-        <div class="arrow-right"></div>
+        <%= link_to '<div class="arrow-left"></div>'.html_safe, request.path %>
+        <%= link_to '<div class="arrow-right"></div>'.html_safe, request.path %>
       </div>
       <!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
     </div>
   </div><br/>
   <!-- end: HORIZONTAL MENU -->
 </div>
-
-

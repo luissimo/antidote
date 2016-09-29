@@ -28,7 +28,7 @@
 <body>
 <div id="app" class="lyt-4">
   <%= render 'shared/header_oqba' %>
-  <div class="container-fluid container-fullw">
+  <div class="container-fluid container-fullw"><br/>
     <div class="main-content">
       <% if notice %>
             <p class="notice alert-info text-center"><%= notice %></p><hr/>
@@ -40,15 +40,14 @@
   </div>
   <%= render 'shared/footer' %>
   <%= render 'shared/javascripts' %>
-  <script src="/bower_components/gmaps/gmaps.min.js"></script>
-  <script src="/LAYOUT-4/STANDARD/assets/js/maps.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhyiar--hChV7hyYROUcEnL7VJcBBS4wY"></script>
-  <script>
-    jQuery(document).ready(function() {
-      Maps.init();
-    });
-  </script>
-
 </div>
+<script src="/bower_components/gmaps/gmaps.min.js"></script>
+<script src="/LAYOUT-4/STANDARD/assets/js/maps.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhyiar--hChV7hyYROUcEnL7VJcBBS4wY"></script>
+<script>
+  jQuery(document).ready(function() {
+    Maps.init();
+  });
+</script>
 </body>
 </html>

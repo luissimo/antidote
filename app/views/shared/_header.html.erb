@@ -42,13 +42,12 @@
       </div>
       <!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
       <div class="close-handle visible-xs-block visible-sm-block menu-toggler" data-toggle="collapse" data-target=".horizontal-menu">
-        <div class="arrow-left"></div>
-        <div class="arrow-right"></div>
+        <%= link_to '<div class="arrow-left"></div>'.html_safe, request.path %>
+        <%= link_to '<div class="arrow-right"></div>'.html_safe, request.path %>
       </div>
       <!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
     </div>
   </div><br/>
   <!-- end: HORIZONTAL MENU -->
   <!-- end: TOP NAVBAR -->
-
 </div>
