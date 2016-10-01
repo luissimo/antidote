@@ -6,7 +6,7 @@ class InvoicesController < ApplicationController
   # GET /invoices.json
   def index
     @invoices =  current_user.invoices.all
-    flash.now[:notice] = 'U heeft nog geen facturen' if @invoices.empty?
+    flash.now[:notice] = 'U heeft nog geen facturen toegevoegd' if @invoices.empty?
   end
 
   # GET /invoices/1
@@ -33,7 +33,7 @@ class InvoicesController < ApplicationController
     
     respond_to do |format|
       if @invoice.save
-        format.html { redirect_to @invoice, notice: 'Invoice was successfully created.' }
+        format.html { redirect_to @invoice, notice: 'Uw factuur is opgeslagen.' }
         format.json { render :show, status: :created, location: @invoice }
       else
         format.html { @invoice.build_company
@@ -50,7 +50,7 @@ class InvoicesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice.update(invoice_params)
-        format.html { redirect_to @invoice, notice: 'Invoice was successfully updated.' }
+        format.html { redirect_to @invoice, notice: 'Uw factuur is opgeslagen.' }
         format.json { render :show, status: :ok, location: @invoice }
       else
         format.html { render :edit }
@@ -64,7 +64,7 @@ class InvoicesController < ApplicationController
   def destroy
     @invoice.destroy
     respond_to do |format|
-      format.html { redirect_to invoices_url, notice: 'Invoice was successfully destroyed.' }
+      format.html { redirect_to invoices_url, notice: 'Uw factuur is verwijderd.' }
       format.json { head :no_content }
     end
   end

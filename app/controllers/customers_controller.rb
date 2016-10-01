@@ -1,10 +1,12 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.all
+    @customers = current_user.customers.all
+    flash.now[:notice] = 'U heeft nog geen klanten toegevoegd' if @customers.empty?
   end
 
   # GET /customers/1
@@ -14,7 +16,7 @@ class CustomersController < ApplicationController
 
   # GET /customers/new
   def new
-    @customer = Customer.new
+    @customer = current_user.customers.new
   end
 
   # GET /customers/1/edit
@@ -24,11 +26,11 @@ class CustomersController < ApplicationController
   # POST /customers
   # POST /customers.json
   def create
-    @customer = Customer.new(customer_params)
+    @customer = current_user.customers.new(customer_params)
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
+        format.html { redirect_to @customer, notice: 'Klant is succesvol toegoevoegd' }
         format.json { render :show, status: :created, location: @customer }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class CustomersController < ApplicationController
   def update
     respond_to do |format|
       if @customer.update(customer_params)
-        format.html { redirect_to @customer, notice: 'Customer was successfully updated.' }
+        format.html { redirect_to @customer, notice: 'Klant is succesvol toegevoegd' }
         format.json { render :show, status: :ok, location: @customer }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class CustomersController < ApplicationController
   def destroy
     @customer.destroy
     respond_to do |format|
-      format.html { redirect_to customers_url, notice: 'Customer was successfully destroyed.' }
+      format.html { redirect_to customers_url, notice: 'Klant is succesvol verwijderd.' }
       format.json { head :no_content }
     end
   end
@@ -64,7 +66,7 @@ class CustomersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_customer
-      @customer = Customer.find(params[:id])
+      @customer = current_user.customers.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
