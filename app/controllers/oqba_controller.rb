@@ -13,6 +13,4 @@ class OqbaController < ApplicationController
   def packages
   end
 
-
-
 end

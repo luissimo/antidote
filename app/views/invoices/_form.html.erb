@@ -36,11 +36,6 @@
               <%= f.label 'te betalen voor', class: 'text-bold text-large' %><br>
               <%= f.date_select :duedate, class: 'form-control' %>
             </div><br/>
-            <div class="actions">
-              <%= f.submit 'Opslaan', class: 'btn btn-primary btn-success' %>
-              <%= link_to 'Annuleren', invoices_path, class: 'btn btn-primary btn-info' %>
-              <a onclick="javascript:window.print();" class="btn btn-primary float-right"> Print <i class="fa fa-print"></i></a>
-            </div>
         </div>
       </div>
     </div>
@@ -164,7 +159,6 @@
                     </div>
                   </li>
                 </ul>
-                <% end %>
                 <br>
               </div>
             </div>
@@ -178,7 +172,21 @@
       </div>
     </div>
   </div>
-</div>
+  <div class="col-md-12">
+    <div class="row actions">
+      <div class="col-md-4">
+        <%= link_to 'Annuleren', invoices_path, class: 'btn btn-primary btn-block btn-info' %>
+      </div>
+      <div class="col-md-4">
+        <a onclick="javascript:window.print();" class="btn btn-primary float-right btn-block"> Print <i class="fa fa-print"></i></a>
+      </div>
+      <div class="col-md-4">
+        <%= f.submit 'Opslaan', class: 'btn btn-primary btn-success btn-block' %>
+      </div>
+    </div>
+  </div>
+</div><br/><br/>
+<% end %>
 <!-- end: INVOICE -->
 
 <script src="/LAYOUT-4/STANDARD/assets/js/invoice.js"></script>
