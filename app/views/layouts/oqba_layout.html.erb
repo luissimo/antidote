@@ -31,9 +31,9 @@
   <div class="container-fluid">
     <div class="main-content">
       <% if notice %>
-          <p class="notice alert-info text-center"><%= notice %></p><hr/>
+          <p class="alert alert-info text-center"><%= notice %></p><hr/>
       <% elsif alert %>
-          <p class="notice alert-danger text-center"><%= alert %></p><hr/>
+          <p class="alert alert-danger text-center"><%= alert %></p><hr/>
       <% end %>
       <%= yield %>
     </div>
