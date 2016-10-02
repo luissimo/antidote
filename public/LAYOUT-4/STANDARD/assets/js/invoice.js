@@ -125,7 +125,8 @@ $(document).ready(function() {
 // hide 'add row button' after 10 rows
 $(document).ready(function() {
     $('.products_tr').change(function() {
-        var length = $('.products_tr').length;
+        var length = 0;
+        length = $('.products_tr').length;
         if (length > 10) {
             $('#add_products').hide();
             alert('U kunt geen rijen meer toevoegen, maak een nieuwe factuur aan.')

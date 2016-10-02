@@ -27,6 +27,9 @@
 </head>
 <body>
 <div id="app" class="lyt-4">
+  <% if current_page?(edit_user_registration_path) %>
+      <%= render 'shared/header' %>
+  <% end %>
   <div class="container-fluid container-fullw">
     <div class="main-content"><hr/>
       <% if notice %>
