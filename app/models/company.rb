@@ -1,6 +1,7 @@
 class Company < ActiveRecord::Base
 
-  belongs_to :invoice, dependent: :destroy
-  belongs_to :user, dependent: :destroy
+  belongs_to :invoice
+  belongs_to :quote
+  belongs_to :user
 
 end

@@ -122,25 +122,24 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-4">
+              <%= link_to 'Aanpassen', edit_invoice_path(@invoice), class: 'btn btn-primary btn-info btn-block' %><hr/>
+            </div>
+            <div class="col-md-4">
+              <%= link_to 'Terug', invoices_path, class: 'btn btn-primary btn-success btn-block' %><hr/>
+            </div>
+            <div class="col-md-4">
+              <p class="btn btn-primary btn-block print_button"><span class="fa fa-print"></span> PRINT </p><hr/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
 
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="col-md-4">
-        <%= link_to 'Aanpassen', edit_invoice_path(@invoice), class: 'btn btn-primary btn-info btn-block' %><hr/>
-      </div>
-      <div class="col-md-4">
-        <%= link_to 'Terug', invoices_path, class: 'btn btn-primary btn-success btn-block' %><hr/>
-      </div>
-      <div class="col-md-4">
-        <p class="btn btn-primary btn-block print_button"><span class="fa fa-print"></span> PRINT </p><hr/>
-      </div>
-    </div>
-  </div>
 
 
   <script>

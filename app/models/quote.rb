@@ -1,4 +1,4 @@
-class Invoice < ActiveRecord::Base
+class Quote < ActiveRecord::Base
 
   has_one :company, dependent: :destroy
   has_one :customer, dependent: :destroy
@@ -9,5 +9,6 @@ class Invoice < ActiveRecord::Base
   accepts_nested_attributes_for :products, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :company, reject_if: :all_blank, allow_destroy: true
   validates :number, :currency, :date, :duedate, :btwtotal, :subtotal, :total, presence: true
+
 
 end

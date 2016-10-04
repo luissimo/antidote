@@ -50,7 +50,7 @@ class InvoicesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice.update(invoice_params)
-        format.html { redirect_to @invoice, notice: 'Uw factuur is opgeslagen.' }
+        format.html { redirect_to @invoice, notice: 'Uw factuur is aangepast.' }
         format.json { render :show, status: :ok, location: @invoice }
       else
         format.html { render :edit }
@@ -77,8 +77,8 @@ class InvoicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoice_params
-      params.require(:invoice).permit(:number, :currency, :date, :duedate, :btwtotal,
-                                      :subtotal, :total, :footer, customer_attributes: [:id, :company_name, :address_line_1, :zip_code, :_destroy],
+      params.require(:invoice).permit(:number, :currency, :date, :duedate, :btwtotal, :subtotal, :total, :footer,
+                                      customer_attributes: [:id, :company_name, :address_line_1, :zip_code, :_destroy],
                                       company_attributes: [:id, :btw_number, :iban_number, :kvk_number, :company_name, :_destroy],
                                       products_attributes: [:id, :quantity, :description, :unitprice, :btw, :total])
     end
