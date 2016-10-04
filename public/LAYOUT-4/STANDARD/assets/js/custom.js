@@ -16,4 +16,10 @@ $(document).ready(function() {
 });
 
 
+// $(document).on('click', '.choose_package', function() {
+ //   if () {
+//
+  //  }
+//});
+
 

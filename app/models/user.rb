@@ -6,5 +6,5 @@ class User < ActiveRecord::Base
   has_many :invoices
   has_many :products
   has_many :customers
-  has_one  :company
+  has_many  :companies
 end
