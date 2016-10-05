@@ -79,15 +79,15 @@
                  <%= f.fields_for :company do |company| %>
                   <li>
                     <strong>BTW:</strong><br/>
-                    <%= company.text_field :btw_number %>
+                    <%= company.text_field :btw_number, class: 'form-control' %>
                   </li>
                   <li>
                     <strong>Bedrijfsnaam:</strong><br/>
-                    <%= company.text_field :company_name %>
+                    <%= company.text_field :company_name, class: 'form-control' %>
                   </li>
                   <li>
                     <strong>IBAN:</strong><br/>
-                    <%= company.text_field :iban_number %>
+                    <%= company.text_field :iban_number, class: 'form-control' %>
                   </li><br/>
                   <li>
                     <strong>Factuurdatum:</strong> <em id="date_output">01/01/2016</em>
