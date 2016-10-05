@@ -1,65 +1,66 @@
-//// show values of database selected item
-// $("#my_select").change(function()
-// {
-//   var selection = $(this).find(":selected");
-//   document.getElementById('show_company_name').innerHTML = selection._data("show-field").value;
-// });
+// Output customer name after 'geachte'
+$(document).on('keyup', '.customer_name_input', function() {
+    $('.customer_name_output').text($(this).val());
+});
+
+// Output company name after 'met vriendelijke groet'
+$(document).on('keyup', '.company_name_input', function() {
+    $('.company_name_output').text($(this).val());
+});
 
 // Output invoicenumber on invoice.
 $(document).on('keyup', '#factuurnummer_input', function() {
-   $('.factuurnummer_output').text($(this).val())
+    $('.factuurnummer_output').text($(this).val())
 });
 
-// Output invoicedate on invoice header
+// Output quotedate on quote header
 
-$(".factuurdatum_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
+$(".factuurdatum_output").text( ($("#quote_date_3i").val()) + ' ' + ($("#quote_date_2i").find(":selected").text()) + ' ' +  ($("#quote_date_1i").val()) );
 
-$("#invoice_date_3i").change(function()
+$("#quote_date_3i").change(function()
 {
-    $('.factuurdatum_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
+    $('.factuurdatum_output').text( ($(this).val()) + ' ' + ($("#quote_date_2i").find(":selected").text()) + ' ' +  ($("#quote_date_1i").val()) ) ;
 });
-$("#invoice_date_2i").change(function()
+$("#quote_date_2i").change(function()
 {
-    $('.factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
+    $('.factuurdatum_output').text( ($("#quote_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#quote_date_1i").val()) ) ;
 });
-$("#invoice_date_1i").change(function()
+$("#quote_date_1i").change(function()
 {
-    $('.factuurdatum_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
-});
-
-
-
-// Output invoicedate on invoice body
-$("#date_output").text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) );
-
-$("#invoice_date_3i").change(function()
-{
-    $('#date_output').text( ($(this).val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' +  ($("#invoice_date_1i").val()) ) ;
-});
-$("#invoice_date_2i").change(function()
-{
-    $('#date_output').text( ($("#invoice_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_date_1i").val()) ) ;
-});
-$("#invoice_date_1i").change(function()
-{
-    $('#date_output').text( ($("#invoice_date_3i").val()) + ' ' + ($("#invoice_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+    $('.factuurdatum_output').text( ($("#quote_date_3i").val()) + ' ' + ($("#quote_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
 });
 
-// Output invoice duedate on invoice body
+// Output quotedate on quote body
+$("#date_output").text( ($("#quote_date_3i").val()) + ' ' + ($("#quote_date_2i").find(":selected").text()) + ' ' +  ($("#quote_date_1i").val()) );
 
-$(".duedate_output").text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) );
+$("#quote_date_3i").change(function()
+{
+    $('#date_output').text( ($(this).val()) + ' ' + ($("#quote_date_2i").find(":selected").text()) + ' ' +  ($("#quote_date_1i").val()) ) ;
+});
+$("#quote_date_2i").change(function()
+{
+    $('#date_output').text( ($("#quote_date_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#quote_date_1i").val()) ) ;
+});
+$("#quote_date_1i").change(function()
+{
+    $('#date_output').text( ($("#quote_date_3i").val()) + ' ' + ($("#quote_date_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+});
 
-$("#invoice_duedate_3i").change(function()
+// Output quote duedate on quote body
+
+$(".duedate_output").text(' ' + ($("#quote_duedate_3i").val()) + ' ' + ($("#quote_duedate_2i").find(":selected").text()) + ' ' +  ($("#quote_duedate_1i").val()) );
+
+$("#quote_duedate_3i").change(function()
 {
-    $('.duedate_output').text(' ' +  ($(this).val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' +  ($("#invoice_duedate_1i").val()) ) ;
+    $('.duedate_output').text(' ' +  ($(this).val()) + ' ' + ($("#quote_duedate_2i").find(":selected").text()) + ' ' +  ($("#quote_duedate_1i").val()) ) ;
 });
-$("#invoice_duedate_2i").change(function()
+$("#quote_duedate_2i").change(function()
 {
-    $('.duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#invoice_duedate_1i").val()) ) ;
+    $('.duedate_output').text(' ' + ($("#quote_duedate_3i").val()) + ' ' + ($(this).find(":selected").text()) + ' ' + ($("#quote_duedate_1i").val()) ) ;
 });
-$("#invoice_duedate_1i").change(function()
+$("#quote_duedate_1i").change(function()
 {
-    $('.duedate_output').text(' ' + ($("#invoice_duedate_3i").val()) + ' ' + ($("#invoice_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
+    $('.duedate_output').text(' ' + ($("#quote_duedate_3i").val()) + ' ' + ($("#quote_duedate_2i").find(":selected").text()) + ' ' + ($(this).val()) ) ;
 });
 
 
@@ -122,7 +123,7 @@ $(document).ready(function() {
 // hide 'add row button' after 10 rows
 $(document).ready(function() {
     $('.products_tr').change(function() {
-        var length =  $('.products_tr').length;
+        var length  = $('.products_tr').length;
         if (length >= 10) {
             $('#add_products').hide();
             alert('U kunt geen rijen meer toevoegen, maak een nieuwe factuur aan.')

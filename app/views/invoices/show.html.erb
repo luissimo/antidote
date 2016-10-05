@@ -12,7 +12,7 @@
                   </div>
                   <div class="col-sm-6">
                     <p class="text-dark">
-                      <strong id="factuurnummer_output"><%= @invoice.number %></strong> <small class="text-light" id="factuurdatum_output"><%= @invoice.date %></small>
+                      <strong id="factuurnummer_output"><%= @invoice.number %></strong> <small class="text-light" id="factuurdatum_output"><%= @invoice.date.strftime('%d-%m-%Y') %></small>
                     </p>
                   </div>
                 </div><hr>
@@ -35,19 +35,19 @@
                   <div class="col-sm-4 pull-right">
                     <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
                       <li>
-                        <strong>BTW #:</strong> 233243444
+                        <strong>Bedrijfsnaam:</strong> <%= @invoice.company.company_name %>
                       </li>
                       <li>
-                        <strong>Bedrijfsnaam:</strong> Company B.V
+                        <strong>IBAN:</strong> <%= @invoice.company.iban_number %>
                       </li>
                       <li>
-                        <strong>IBAN:</strong> 1233F4343ABCDEW
+                        <strong>BTW:</strong> <%= @invoice.company.btw_number %>
+                      </li><br/>
+                      <li>
+                        <strong>Factuurdatum:</strong> <em id="date_output"><%= @invoice.date.strftime('%d-%m-%Y') %></em>
                       </li>
                       <li>
-                        <strong>Factuurdatum:</strong> <em id="date_output">01/01/2016</em>
-                      </li>
-                      <li>
-                        <strong>Te betalen voor:</strong><em id="duedate_output"> 11/02/2016 </em>
+                        <strong>Te betalen voor:</strong><em id="duedate_output"> <%= @invoice.duedate.strftime('%d-%m-%Y') %></em>
                       </li>
                     </ul>
                   </div>
@@ -57,7 +57,7 @@
                     <table class="table table-striped">
                       <thead>
                       <tr>
-                        <th class="hidden-480"> Hoeveelheid </th>
+                        <th class="hidden-480"> </th>
                         <th class="hidden-480"> Beschrijving </th>
                         <th class="hidden-480"> Bedrag </th>
                         <th class="hidden-480"> Totaal </th>

@@ -10,7 +10,7 @@
             <thead>
             <tr>
               <th>Factuurnummer</th>
-              <th>Munteenheid</th>
+              <th>Voor</th>
               <th>Datum</th>
               <th>Te betalen voor</th>
               <th>Totale btw bedrag</th>
@@ -24,7 +24,7 @@
             <% @invoices.each do |invoice| %>
                 <tr>
                   <td><%= invoice.number %></td>
-                  <td><%= invoice.currency %></td>
+                  <td><%= invoice.customer.company_name %></td>
                   <td><%= invoice.date.strftime('%d-%m-%Y') %></td>
                   <td><%= invoice.duedate.strftime('%d-%m-%Y') %></td>
                   <td><%= invoice.currency %><%= '%.2f' % invoice.btwtotal %></td>

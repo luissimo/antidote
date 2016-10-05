@@ -59,7 +59,7 @@
                       <address>
                         <%= f.fields_for :customer do |customer| %>
                             <div class="field">
-                              <%= customer.label 'Bedrijfsnaam ontvanger', class: 'text-large'  %><br/>
+                              <%= customer.label '(bedrijfs)Naam ontvanger', class: 'text-large'  %><br/>
                               <%= customer.text_field :company_name, placeholder: 'bedrijfsnaam', class: 'form-control' %>
                             </div>
                             <div class="field">
@@ -88,7 +88,7 @@
                   <li>
                     <strong>IBAN:</strong><br/>
                     <%= company.text_field :iban_number %>
-                  </li>
+                  </li><br/>
                   <li>
                     <strong>Factuurdatum:</strong> <em id="date_output">01/01/2016</em>
                   </li>

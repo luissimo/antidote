@@ -1,44 +1,170 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="col-md-12">
+    <div class="panel panel-white">
+      <div class="panel-body"><br/>
+        <div class="col-md-10 col-md-offset-1 print_invoice">
+          <div class="panel panel-white">
+            <div class="panel-body">
+              <div class="invoice">
+                <div class="row invoice-logo">
+                  <div class="col-sm-6">
+                    <img alt="" src="">
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="text-dark">
+                      <strong id="factuurnummer_output"><%= @quote.number %></strong> <small class="text-light" id="factuurdatum_output"><%= @quote.date.strftime('%d-%m-%Y') %></small>
+                    </p>
+                  </div>
+                </div><hr>
+                <div class="row company_info">
+                  <div class="col-sm-4">
+                    <div class="well">
+                      <address>
+                        <div class="field">
+                          <strong>Bedrijfsnaam: </strong><%= @quote.customer.company_name %>
+                        </div>
+                        <div class="field">
+                          <strong>Adres: </strong><%= @quote.customer.address_line_1 %>
+                        </div>
+                        <div class="field">
+                          <strong>Postcode & plaats: </strong><%= @quote.customer.zip_code %>
+                        </div>
+                      </address>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 pull-right">
+                    <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
+                      <li>
+                        <strong>Bedrijfsnaam:</strong> <%= @quote.company.company_name %>
+                      </li>
+                      <li>
+                        <strong>IBAN:</strong> <%= @quote.company.iban_number %>
+                      </li>
+                      <li>
+                        <strong>BTW:</strong> <%= @quote.company.btw_number %>
+                      </li><br/>
+                      <li>
+                        <strong>Factuurdatum:</strong> <em id="date_output"><%= @quote.date.strftime('%d-%m-%Y') %></em>
+                      </li>
+                      <li>
+                        <strong>Vervaldatum:</strong><em id="duedate_output"> <%= @quote.duedate.strftime('%d-%m-%Y') %></em>
+                      </li>
+                    </ul>
+                  </div>
+                </div><hr/>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p class="text-small">
+                      Geachte <span class="customer_name_output"><%= @quote.customer.company_name %></span>,<br/>
+                      Hierbij ontvangt u van ons de prijsopgave <strong class="factuurnummer_output"><%= @quote.number %></strong> voor de onderstaande diensten.
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table class="table table-striped">
+                      <thead>
+                      <tr>
+                        <th class="hidden-480"> </th>
+                        <th class="hidden-480"> Beschrijving </th>
+                        <th class="hidden-480"> Bedrag </th>
+                        <th class="hidden-480"> Totaal </th>
+                        <th class="hidden-480"> Btw(%) </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <% @quote.products.each do |product| %>
+                          <% if product.persisted? %>
+                              <tr class="products_tr">
+                                <td> <%= product.quantity %>x </td>
+                                <td> <%= product.description %> </td>
+                                <td> <%= @quote.currency %><%= '%.2f' % product.unitprice %> </td>
+                                <% btw = (product.btw.to_i / 100 ) + 1 %>
+                                <td class="row_total"><%= @quote.currency %><%= '%.2f' % (product.quantity * product.unitprice) * (btw) %></td>
+                                <td> <%= product.btw.to_i %>% </td>
+                              </tr>
+                          <% end %>
+                      <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 invoice-block">
+                    <ul class="list-unstyled amounts text-small">
+                      <li>
+                        <strong>Subtotaal:</strong>
+                        <div class="field">
+                          <%= "#{@quote.currency}#{'%.2f' % @quote.subtotal}" %>
+                          <p class="invoice_subtotal"></p>
+                        </div>
+                      </li>
+                      <!-- <li>
+                         <strong>Discount:</strong>
+                       </li> -->
+                      <li>
+                        <strong>BTW:</strong>
+                        <div class="field">
+                          <%="#{@quote.currency}#{'%.2f' % @quote.btwtotal}" %>
+                          <p class="invoice_btwtotal"></p>
+                        </div>
+                      </li>
+                      <li class="text-extra-large text-dark margin-top-15">
+                        <strong>Totaal:</strong>
+                        <div class="field">
+                          <%="#{@quote.currency}#{'%.2f' % @quote.total}" %>
+                          <p class="invoice_total"></p>
+                        </div>
+                      </li>
+                    </ul>
+                    <br>
+                  </div>
+                </div>
+              </div><hr/>
+              <div class="col-sm-12">
+                <p>
+                  We hopen u hiermee voldoende geïnformeerd te hebben.<br/><br/>
+                  Met vriendelijke groet,<br/>
+                  <span class="company_name_output"><%= @quote.company.company_name %></span>
+                </p><br/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-4">
+              <%= link_to 'Aanpassen', edit_quote_path(@quote), class: 'btn btn-primary btn-info btn-block' %><hr/>
+            </div>
+            <div class="col-md-4">
+              <%= link_to 'Terug', quotes_path, class: 'btn btn-primary btn-success btn-block' %><hr/>
+            </div>
+            <div class="col-md-4">
+              <p class="btn btn-primary btn-block print_button"><span class="fa fa-print"></span> PRINT </p><hr/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p>
-  <strong>Number:</strong>
-  <%= @quote.number %>
-</p>
 
-<p>
-  <strong>Currency:</strong>
-  <%= @quote.currency %>
-</p>
 
-<p>
-  <strong>Date:</strong>
-  <%= @quote.date %>
-</p>
 
-<p>
-  <strong>Duedate:</strong>
-  <%= @quote.duedate %>
-</p>
+  <script>
+    // on click of print button hide all div's except invoice and then force print
+    $(document).ready(function() {
+      $(document).on('click', '.print_button', function() {
+        $('.print_invoice').css({"width": '100%', "height": "100%");
+        $('.hide_this').hide();
+        window.print();
 
-<p>
-  <strong>Btwtotal:</strong>
-  <%= @quote.btwtotal %>
-</p>
+        // return all hidden div's on invoice click
+        $('.print_invoice').click(function() {
+          $('.hide_this').show();
+          $(this).css({width: '83.33333333%'},{height: '60%'});
+        });
+      });
+    });
+  </script>
 
-<p>
-  <strong>Subtotal:</strong>
-  <%= @quote.subtotal %>
-</p>
-
-<p>
-  <strong>Total:</strong>
-  <%= @quote.total %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @quote.user_id %>
-</p>
-
-<%= link_to 'Edit', edit_quote_path(@quote) %> |
-<%= link_to 'Back', quotes_path %>
