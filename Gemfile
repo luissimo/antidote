@@ -17,6 +17,9 @@ gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 gem 'cocoon', '~> 1.2', '>= 1.2.9'
 gem 'devise'
 gem 'mail_form'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
 ## gem 'figaro' <-- env variables
 ## gem 'watir-webdriver' <-- advanced browser stuff
 ## gem 'sitemap_generator' <-- sitemap [google, bing]

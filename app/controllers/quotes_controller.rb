@@ -36,7 +36,10 @@ class QuotesController < ApplicationController
         format.html { redirect_to @quote, notice: 'Uw offerte is opgeslagen' }
         format.json { render :show, status: :created, location: @quote }
       else
-        format.html { render :new }
+        format.html { @quote.build_company
+                      @quote.products.build
+                      @quote.build_customer
+                      render :new }
         format.json { render json: @quote.errors, status: :unprocessable_entity }
       end
     end

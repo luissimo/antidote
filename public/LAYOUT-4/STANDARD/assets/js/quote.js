@@ -68,11 +68,11 @@ $("#quote_duedate_1i").change(function()
 $(document).ready(function() {
     var counter = $('.products_tr').length;
     $('#add_products').click(function() {
-        $('.products_tr:last').after('<tr class="products_tr"><td><input class="quantity form-control" type="text" value="" name="invoice[products_attributes]['+counter+'][quantity]"></td>' +
-            '<td><textarea class="form-control" name="invoice[products_attributes]['+counter+'][description]"></textarea></td>' +
-            '<td><input id="unitprice" class="unitprice form-control" type="text" name="invoice[products_attributes]['+counter+'][unitprice]"></td>' +
+        $('.products_tr:last').after('<tr class="products_tr"><td><input class="quantity form-control" type="text" value="" name="quote[products_attributes]['+counter+'][quantity]"></td>' +
+            '<td><textarea class="form-control" name="quote[products_attributes]['+counter+'][description]"></textarea></td>' +
+            '<td><input id="unitprice" class="unitprice form-control" type="text" name="quote[products_attributes]['+counter+'][unitprice]"></td>' +
             '<td class="row_total"></td>' +
-            '<td><select class="btw_percentage" name="invoice[products_attributes]['+counter+'][btw]"><option title="21%" value="21"> 21%</option> ' +
+            '<td><select class="btw_percentage" name="quote[products_attributes]['+counter+'][btw]"><option title="21%" value="21"> 21%</option> ' +
             '<option title="6%" value="6"> 6%</option><option title="0%" value="0"> 0%</option></select></td>' +
             '<td class="delete_tr"><a class="delete" title="Rij verwijderen"><span class="ti-close"></span></a></td></tr>');
         counter ++;

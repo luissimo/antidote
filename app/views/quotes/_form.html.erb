@@ -59,7 +59,7 @@
                       <address>
                         <%= f.fields_for :customer do |customer| %>
                             <div class="field">
-                              <%= customer.label 'Bedrijfsnaam ontvanger', class: 'text-large'  %><br/>
+                              <%= customer.label '(Bedrijfs)naam ontvanger', class: 'text-large'  %><br/>
                               <%= customer.text_field :company_name, placeholder: 'bedrijfsnaam', class: 'form-control customer_name_input' %>
                             </div>
                             <div class="field">

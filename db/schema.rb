@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004155124) do
+ActiveRecord::Schema.define(version: 20161005175736) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "company_name"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20161004155124) do
     t.string   "unconfirmed_email"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "image"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

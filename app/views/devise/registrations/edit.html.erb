@@ -38,17 +38,17 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="text-bold text-large"> Kies een logo voor op uw facturen en offertes </label>
-                          <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <div class="fileinput-new thumbnail"><img src="assets/images/avatar-1-xl.jpg" alt="">
-                            </div>
-                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                            <div class="user-edit-image-buttons">
-                                        <span class="btn btn-azure btn-file"><span class="fileinput-new"><i class="fa fa-arrow-up"></i> Kies bestand</span><span class="fileinput-exists"><i class="fa fa-picture"></i></span>
-                                          <input type="file">
-                                        </span>
-                              <a href="#" class="btn fileinput-exists btn-red" data-dismiss="fileinput"> <i class="fa fa-times"></i> Verwijder </a>
-                            </div>
-                          </div>
+                            <div class="fileinput-preview"><%= image_tag current_user.image.thumb.url %></div>
+
+                              <% if current_user.image.url.present? %>
+                                  <%= image_tag(current_user.image.url) %>
+                                  <%= f.label :remove_image do %>
+                                      <%= f.check_box :remove_image %>
+                                  <% end %>
+                              <% end %>
+                              <%= f.file_field :image %>
+                              <%= f.hidden_field :image_cache %>
+
                         </div>
                       </div>
                     </div>
