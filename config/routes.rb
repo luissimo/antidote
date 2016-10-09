@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :invoices, path: :facturen
   resources :products, path: :producten
   resources :customers, path: :klanten
-  resources :companies, path: :instellingen
+  resources :companies, path: :sjablonen
   resources :contacts, only: [:new, :create], via: [:post]
   devise_for :users, path: :gebruiker
 

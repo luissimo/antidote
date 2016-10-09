@@ -4,22 +4,22 @@
   <div class="col-md-12">
     <div class="panel panel-white">
       <div class="panel-body">
-        <h5 class="over-title margin-bottom-15">Mijn <span class="text-bold">instellingen</span></h5>
+        <h5 class="over-title margin-bottom-15">Mijn <span class="text-bold">sjablonen</span></h5>
         <div class="alert alert-info">
-          Hier ziet u uw bedrijfsgegevens die kunnen worden geplaatst in facturen en offertes.<br/> U kunt meerdere records toevoegen om zo eenvoudig te kunnen schakelen tussen verschillende bedrijven.
+          Hier ziet u uw sjablonen die kunnen worden geplaatst in facturen en offertes.<br/> U kunt meerdere records toevoegen om zo eenvoudig te kunnen schakelen tussen verschillende bedrijven.
         </div>
         <%= link_to t('.new', :default => ' Nieuwe toevoegen'),
                     new_company_path,
-                    :class => 'btn btn-primary btn-lg pull-right fa fa-arrow-circle-down' %><br/><br/><br/>
+                    :class => 'btn btn-primary btn-lg pull-right fa fa-arrow-circle-down' %><br/><br/>
         <div class="table-responsive">
           <table class="table table-bordered table-hover">
             <thead>
             <tr>
               <th><%= model_class.human_attribute_name('#') %></th>
               <th><%= model_class.human_attribute_name(:Bedrijfsnaam) %></th>
-              <th><%= model_class.human_attribute_name(:Adres_1) %></th>
               <th><%= model_class.human_attribute_name(:IBAN) %></th>
-              <th><%= model_class.human_attribute_name(:Naam_bankhouder) %></th>
+              <th><%= model_class.human_attribute_name(:BTW) %></th>
+              <th><%= model_class.human_attribute_name(:Logo) %></th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -28,9 +28,9 @@
                 <tr>
                   <td><%= link_to company.id, company_path(company) %></td>
                   <td><%= company.company_name %></td>
-                  <td><%= company.address_line_1 %></td>
                   <td><%= company.iban_number %></td>
-                  <td><%= company.bank_holder_name %></td>
+                  <td><%= company.btw_number %></td>
+                  <td><%= image_tag company.picture.url %></td>
                   <td>
                     <%= link_to '',
                                 company_path(company), class: 'btn btn-primary btn-info glyphicon glyphicon-search' %>

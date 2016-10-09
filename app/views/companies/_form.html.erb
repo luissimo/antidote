@@ -1,4 +1,4 @@
-<%= form_for @company, :html => { :class => "form-horizontal company" } do |f| %>
+<%= form_for @company, :html => { class: "form-horizontal company", multipart: true } do |f| %>
 <div class="col-md-8 col-md-offset-3">
   <% if @company.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -16,7 +16,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label 'Bedrijfsnaam', :class => 'control-label col-lg-2' %>
+    <%= f.label 'Bedrijfsnaam *', :class => 'control-label col-lg-2' %>
     <div class="col-lg-4">
       <%= f.text_field :company_name, :class => 'form-control' %>
     </div>
@@ -79,14 +79,14 @@
     <%=f.error_span(:kvk_number) %>
   </div>
   <div class="form-group">
-    <%= f.label 'BTW nummer', :class => 'control-label col-lg-2' %>
+    <%= f.label 'BTW nummer *', :class => 'control-label col-lg-2' %>
     <div class="col-lg-4">
       <%= f.text_field :btw_number, :class => 'form-control' %>
     </div>
     <%=f.error_span(:btw_number) %>
   </div>
   <div class="form-group">
-    <%= f.label 'IBAN', :class => 'control-label col-lg-2' %>
+    <%= f.label 'IBAN *', :class => 'control-label col-lg-2' %>
     <div class="col-lg-4">
       <%= f.text_field :iban_number, :class => 'form-control' %>
     </div>
@@ -106,6 +106,14 @@
     </div>
     <%=f.error_span(:bank_holder_name) %>
   </div>
+  <div class="form-group">
+    <%= f.label 'Logo toevoegen *', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-4">
+      <%= f.file_field :picture, accept: 'image/jpeg, image/jpg, image/gif, image/png, image/ai, image/svg', :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:picture) %>
+    <%= image_tag @company.picture.url if @company.picture? %>
+  </div>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
@@ -113,7 +121,18 @@
       <%= link_to t('.cancel', :default => 'annuleren'),
                 companies_path, :class => 'btn btn-primary btn-info' %>
     </div>
-  </div>
+  </div><br/><br/>
 
 <% end %>
-</div><br/><br/>
+</div>
+
+
+
+<script>
+  $('#company_picture').bind('change', function() {
+    size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Uw logo mag niet groter zijn dan 5MB, kies een kleiner bestand.')
+    }
+  });
+</script>
