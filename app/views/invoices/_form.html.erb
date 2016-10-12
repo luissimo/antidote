@@ -69,26 +69,66 @@
                             <div class="field">
                               <%= customer.label 'Postcode & stad', class: 'text-large' %><br>
                               <%= customer.text_field :zip_code, placeholder: '1234AB Rotterdam', class: 'form-control' %>
-                            </div>
+                            </div><hr/>
                         <% end %>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-blue form-control" data-toggle="modal" data-target="#myModal">
+                          Kies bestaande klant
+                        </button>
                       </address>
                     </div>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Kies bestaande klant</h4>
+                      </div>
+                      <div class="modal-body">
+                        <% current_user.customers.each do |customer| %>
+                        <table class="table table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <td>Bedrijfsnaam</td>
+                              <td>Adres</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><%= customer.company_name %></td>
+                              <td><%= customer.address_line_1 %></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <% end %>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                        <button type="button" class="btn btn-primary btn-blue">Toevoegen</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="col-sm-4 pull-right">
                 <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
                  <%= f.fields_for :company do |company| %>
                   <li>
                     <strong>BTW:</strong><br/>
-                    <%= company.text_field :btw_number %>
+                    <%= company.text_field :btw_number, class: 'form-control' %>
                   </li>
                   <li>
                     <strong>Bedrijfsnaam:</strong><br/>
-                    <%= company.text_field :company_name %>
+                    <%= company.text_field :company_name, class: 'form-control' %>
                   </li>
                   <li>
                     <strong>IBAN:</strong><br/>
-                    <%= company.text_field :iban_number %>
+                    <%= company.text_field :iban_number, class: 'form-control' %>
                   </li><br/>
+                  <li>
+                    <%= button_tag 'Kies sjabloon', class: 'btn btn-primary form-control', id: 'choose_company' %>
+                  </li><hr/>
                   <li>
                     <strong>Factuurdatum:</strong> <em id="date_output">01/01/2016</em>
                   </li>
@@ -174,13 +214,10 @@
   </div>
   <div class="col-md-12">
     <div class="row actions">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <%= link_to 'Annuleren', invoices_path, class: 'btn btn-primary btn-block btn-info' %>
       </div>
-      <div class="col-md-4">
-        <a onclick="javascript:window.print();" class="btn btn-primary float-right btn-block"> Print <i class="fa fa-print"></i></a>
-      </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <%= f.submit 'Opslaan', class: 'btn btn-primary btn-success btn-block' %>
       </div>
     </div>
@@ -188,5 +225,12 @@
 </div><br/><br/>
 <% end %>
 <!-- end: INVOICE -->
+
+<script>
+  $('#customerModal').hide();
+  $(document).on('click', '#choose_customer', function() {
+    $('#customerModal').show();
+  });
+</script>
 
 <script src="/LAYOUT-4/STANDARD/assets/js/invoice.js"></script>
