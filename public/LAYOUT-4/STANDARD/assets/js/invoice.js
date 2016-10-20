@@ -169,7 +169,6 @@ $(document).on('change', '.quantity', function(){
 
 // do row total, subtotal, btwtotal & invoice total calculation if unitprice value changes
 $(document).on('change', '.unitprice', function(){
-
     var total = 0,rowtotal = 0, invoice_btwtotaal = 0, invoice_subtotal = 0, invoice_total = 0;
     $('.products_tr').each(function(){
         $(this).find('.unitprice').val($(this).find('.unitprice').val().replace(/,/g, '.'));

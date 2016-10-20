@@ -72,13 +72,13 @@
                             </div><hr/>
                         <% end %>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary btn-blue form-control" data-toggle="modal" data-target="#myModal">
+                        <button type="button" class="btn btn-primary btn-blue form-control" data-toggle="modal" data-target="#myModalCustomer">
                           Kies bestaande klant
                         </button>
                       </address>
                     </div>
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="myModalCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -90,14 +90,18 @@
                         <table class="table table-bordered table-hover">
                           <thead>
                             <tr>
+                              <td> # </td>
                               <td>Bedrijfsnaam</td>
                               <td>Adres</td>
+                              <td>Postcode, stad</td>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
+                              <td><%= customer.id %></td>
                               <td><%= customer.company_name %></td>
                               <td><%= customer.address_line_1 %></td>
+                              <td><%= customer.zip_code%></td>
                             </tr>
                           </tbody>
                         </table>
@@ -115,19 +119,25 @@
                 <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
                  <%= f.fields_for :company do |company| %>
                   <li>
-                    <strong>BTW:</strong><br/>
-                    <%= company.text_field :btw_number, class: 'form-control' %>
+                    <strong>Bedrijfsnaam:</strong><br/>
+                    <%= company.text_field :company_name, class: 'form-control chosen_company_name' %>
                   </li>
                   <li>
-                    <strong>Bedrijfsnaam:</strong><br/>
-                    <%= company.text_field :company_name, class: 'form-control' %>
+                    <strong>BTW:</strong><br/>
+                    <%= company.text_field :btw_number, class: 'form-control chosen_company_btw' %>
                   </li>
                   <li>
                     <strong>IBAN:</strong><br/>
-                    <%= company.text_field :iban_number, class: 'form-control' %>
+                    <%= company.text_field :iban_number, class: 'form-control chosen_company_iban' %>
                   </li><br/>
                   <li>
-                    <%= button_tag 'Kies sjabloon', class: 'btn btn-primary form-control', id: 'choose_company' %>
+                    <label>Kies een sjabloon </label>
+                    <%= select_tag 'choose company', options_from_collection_for_select(current_user.companies.all, 'id', 'company_name'), id: "choose_company" %>
+                  </li>
+                  <li>
+                    <button type="button" class="btn btn-primary btn-blue form-control" data-toggle="modal" data-target="#myModalCompany">
+                      Kies sjabloon
+                    </button>
                   </li><hr/>
                   <li>
                     <strong>Factuurdatum:</strong> <em id="date_output">01/01/2016</em>
@@ -136,9 +146,61 @@
                     <strong>Te betalen voor:</strong><em class="duedate_output"> 11/02/2016 </em>
                   </li>
                  <% end %>
+                  <li class="display_btw">
+                    <% if @session_value.present? %>
+                      <%= @session_value["btw_number"] %>
+                    <% end %>
+                  <li class="display_iban">
+                    <% if @session_value.present? %>
+                      <%= @session_value["iban_number"] %>
+                    <% end %>
+                  </li>
                 </ul>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModalCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Kies sjabloon</h4>
+                      </div>
+                      <div class="modal-body">
+                        <% current_user.companies.each do |company| %>
+                            <table class="table table-bordered table-hover">
+                              <thead>
+                              <tr>
+                                <td> # </td>
+                                <td>Bedrijfsnaam</td>
+                                <td>BTW</td>
+                                <td>IBAN</td>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr class="selected_company">
+                                <td><%= company.id %></td>
+                                <td><%= company.company_name %></td>
+                                <td><%= company.btw_number %></td>
+                                <td><%= company.iban_number %></td>
+                              </tr>
+                              </tbody>
+                              </table>
+                        <% end %>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                        <button type="button" class="btn btn-primary btn-blue">Toevoegen</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
             </div>
+            <div id="btw_number"></div>
+            <div id="iban_number"></div>
             <div class="row">
               <div class="col-sm-12">
                 <table class="table table-striped">
@@ -223,6 +285,7 @@
     </div>
   </div>
 </div><br/><br/>
+
 <% end %>
 <!-- end: INVOICE -->
 
@@ -231,6 +294,26 @@
   $(document).on('click', '#choose_customer', function() {
     $('#customerModal').show();
   });
+
+  $(document).ready(function() {
+    $("#choose_company").bind("change",function() {
+      if ($(this).val() != undefined) {
+        $.ajax({
+          url : "/my_action",
+          data: {'company': $(this).val()},
+          dataType: "json",
+          type: "GET",
+          success : function(data) {
+            $(".display_btw").html(data["btw_number"]);
+            $(".display_iban").html(data["iban_number"]);
+            $('.chosen_company_btw').val(data["btw_number"]).text(data["btw_number"]);
+            $('.chosen_company_iban').val(data["iban_number"]).text(data["iban_number"]);
+          }
+        })
+      }
+    })
+  })
 </script>
+
 
 <script src="/LAYOUT-4/STANDARD/assets/js/invoice.js"></script>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   match 'diensten'   =>  'oqba#services', via: [:get, :post]
   match 'pakketten'  =>  'oqba#packages', via: [:get, :post]
   match 'contacts'   =>  'contacts#new',  via: [:get, :post]
+  get '/my_action', to:  'invoices#my_action'
 
 ## https://vast-fortress-16771.herokuapp.com/
 
