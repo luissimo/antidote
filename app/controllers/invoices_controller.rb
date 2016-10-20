@@ -9,14 +9,15 @@ class InvoicesController < ApplicationController
     flash.now[:notice] = 'U heeft nog geen facturen toegevoegd' if @invoices.empty?
   end
 
-  def my_action
+  def select_company
     if params[:company].present?
       @company = current_user.companies.find(params[:company])
       @data = Hash.new
+      @data["company_name"] = @company.company_name
       @data["btw_number"] = @company.btw_number
       @data["iban_number"] = @company.iban_number
-      session[:data] = @data
-      render json: @data and return false
+      @data["logo"] = @company.picture.url
+      render json: @data
     end
   end
 
@@ -24,7 +25,6 @@ class InvoicesController < ApplicationController
   # GET /invoices/1
   # GET /invoices/1.json
   def show
-    @session_variable = session[:data]
   end
 
   # GET /invoices/new
@@ -33,9 +33,7 @@ class InvoicesController < ApplicationController
     @invoice.build_company
     @invoice.products.build
     @invoice.build_customer
-    if session[:data].present?
-      @session_value = session[:data]
-    end
+    @company = current_user.companies.find(params[:company]) if params[:company].present?
   end
 
   # GET /invoices/1/edit
@@ -96,7 +94,7 @@ class InvoicesController < ApplicationController
   def invoice_params
     params.require(:invoice).permit(:number, :currency, :date, :duedate, :btwtotal, :subtotal, :total, :footer,
                                     customer_attributes: [:id, :company_name, :address_line_1, :zip_code, :_destroy],
-                                    company_attributes: [:id, :btw_number, :iban_number, :kvk_number, :company_name, :_destroy],
+                                    company_attributes: [:id, :btw_number, :iban_number, :company_name, :picture, :_destroy],
                                     products_attributes: [:id, :quantity, :description, :unitprice, :btw, :total])
   end
 end

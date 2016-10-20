@@ -49,14 +49,6 @@
                       <li>
                         <strong>Te betalen voor:</strong><em id="duedate_output"> <%= @invoice.duedate.strftime('%d-%m-%Y') %></em>
                       </li>
-                      <li class="display_iban">
-                        <% if @session_value.present? %>
-                            <%= @session_value["btw_number"] %>
-                        <% end %>
-                      <li class="display_btw">
-                        <% if @session_value.present? %>
-                            <%= @session_value["iban_number"] %>
-                        <% end %>
                     </ul>
                   </div>
                 </div>

@@ -16,4 +16,8 @@ class Company < ActiveRecord::Base
       end
     end
 
+    def display_company_info
+      "##{id} | #{company_name}"
+    end
+
 end

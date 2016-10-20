@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   resources :contacts, only: [:new, :create], via: [:post]
   devise_for :users, path: :gebruiker
 
-  root                   'oqba#index'
-  match 'over-ons'   =>  'oqba#about_us', via: [:get, :post]
-  match 'diensten'   =>  'oqba#services', via: [:get, :post]
-  match 'pakketten'  =>  'oqba#packages', via: [:get, :post]
-  match 'contacts'   =>  'contacts#new',  via: [:get, :post]
-  get '/my_action', to:  'invoices#my_action'
+  root                     'oqba#index'
+  match 'over-ons'     =>  'oqba#about_us', via: [:get, :post]
+  match 'diensten'     =>  'oqba#services', via: [:get, :post]
+  match 'pakketten'    =>  'oqba#packages', via: [:get, :post]
+  match 'contacts'     =>  'contacts#new',  via: [:get, :post]
+  get '/kies-sjabloon' =>  'invoices#select_company'
 
 ## https://vast-fortress-16771.herokuapp.com/
 
