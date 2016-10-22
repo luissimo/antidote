@@ -7,6 +7,7 @@ class Company < ActiveRecord::Base
   mount_uploader :picture, PictureUploader
   validate :picture_size
 
+
   private
 
     # validate the size of an uploaded picture

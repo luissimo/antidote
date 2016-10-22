@@ -21,7 +21,6 @@ class InvoicesController < ApplicationController
     end
   end
 
-
   # GET /invoices/1
   # GET /invoices/1.json
   def show
@@ -33,7 +32,10 @@ class InvoicesController < ApplicationController
     @invoice.build_company
     @invoice.products.build
     @invoice.build_customer
-    @company = current_user.companies.find(params[:company]) if params[:company].present?
+    if params[:company].present?
+      @company = current_user.companies.find(params[:company])
+      @picture = @company.picture.url
+    end
   end
 
   # GET /invoices/1/edit

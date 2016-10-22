@@ -45,8 +45,9 @@
           <div class="invoice">
             <div class="row invoice-logo">
               <div class="col-sm-8">
-                <div class="col-sm-6 col-sm-offset-1">
-                  <img alt="" src="" class="chosen_company_logo">
+                <div class="col-sm-6">
+                  <%= f.fields_for :company do |company| %>
+                      <%= image_tag @picture.to_s, class: 'chosen_company_logo' %>
                 </div>
               </div>
               <div class="col-sm-4">
@@ -119,7 +120,6 @@
               </div>
               <div class="col-sm-4 pull-right">
                 <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
-                 <%= f.fields_for :company do |company| %>
                   <li>
                     <strong>Bedrijfsnaam:</strong><br/>
                     <%= company.text_field :company_name, class: 'form-control chosen_company_name' %>
@@ -132,9 +132,6 @@
                     <strong>IBAN:</strong><br/>
                     <%= company.text_field :iban_number, class: 'form-control chosen_company_iban' %>
                   </li><br/>
-                      <li>
-                        <%= company.hidden_field :picture %>
-                      </li>
                   <li>
                     <button type="button" class="btn btn-primary btn-blue form-control" data-toggle="modal" data-target="#myModalCompany">
                       Kies sjabloon
@@ -149,7 +146,6 @@
                  <% end %>
                 </ul>
 
-
                 <!-- Modal -->
                 <div class="modal fade" id="myModalCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
@@ -159,16 +155,14 @@
                         <h4 class="modal-title" id="myModalLabel">Kies sjabloon</h4>
                       </div>
                       <div class="modal-body">
-                          <%= select_tag 'choose company', options_from_collection_for_select(current_user.companies.all, 'id', 'display_company_info'), id: "choose_company", class: 'form-control' %>
+                          <%= select_tag 'choose company', content_tag(:option,'Kies een optie...',:value=>"") + options_from_collection_for_select(current_user.companies.all, 'id', 'display_company_info'), id: "choose_company", class: 'form-control' %>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
-                        <button type="button" class="btn btn-primary btn-blue">Toevoegen</button>
                       </div>
                     </div>
                   </div>
                 </div>
-
 
               </div>
             </div>
@@ -263,10 +257,6 @@
 <!-- end: INVOICE -->
 
 <script>
-  $('#customerModal').hide();
-  $(document).on('click', '#choose_customer', function() {
-    $('#customerModal').show();
-  });
 
   $(document).ready(function() {
     $("#choose_company").bind("change",function() {
