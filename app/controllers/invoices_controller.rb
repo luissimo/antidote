@@ -10,14 +10,27 @@ class InvoicesController < ApplicationController
   end
 
   def select_company
+    ## select existing company info (sjablonen)
     if params[:company].present?
       @company = current_user.companies.find(params[:company])
-      @data = Hash.new
-      @data["company_name"] = @company.company_name
-      @data["btw_number"] = @company.btw_number
-      @data["iban_number"] = @company.iban_number
-      @data["logo"] = @company.picture.url
-      render json: @data
+      @data_company = Hash.new
+      @data_company["company_name"] = @company.company_name
+      @data_company["btw_number"] = @company.btw_number
+      @data_company["iban_number"] = @company.iban_number
+      @data_company["logo"] = @company.picture.url
+      render json: @data_company
+    end
+  end
+
+  def select_customer
+    ## select existing customer info
+    if params[:customer].present?
+      @customer = current_user.customers.find(params[:customer])
+      @data_customer = Hash.new
+      @data_customer['company_name'] = @customer.company_name
+      @data_customer['address_line_1'] = @customer.address_line_1
+      @data_customer['zip_code'] = @customer.zip_code
+      render json: @data_customer
     end
   end
 
@@ -100,3 +113,4 @@ class InvoicesController < ApplicationController
                                     products_attributes: [:id, :quantity, :description, :unitprice, :btw, :total])
   end
 end
+

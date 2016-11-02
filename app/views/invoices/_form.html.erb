@@ -47,7 +47,7 @@
               <div class="col-sm-8">
                 <div class="col-sm-6">
                   <%= f.fields_for :company do |company| %>
-                      <%= image_tag @picture.to_s, class: 'chosen_company_logo' %>
+                      <%= image_tag @picture.to_s, class: 'chosen_companies_logo' %>
                 </div>
               </div>
               <div class="col-sm-4">
@@ -63,15 +63,15 @@
                         <%= f.fields_for :customer do |customer| %>
                             <div class="field">
                               <%= customer.label '(bedrijfs)Naam ontvanger', class: 'text-large'  %><br/>
-                              <%= customer.text_field :company_name, placeholder: 'bedrijfsnaam', class: 'form-control' %>
+                              <%= customer.text_field :company_name, class: 'form-control chosen_customers_companyname' %>
                             </div>
                             <div class="field">
                               <%= customer.label 'Adres ontvanger', class: 'text-large' %><br>
-                              <%= customer.text_field :address_line_1, placeholder: 'adres ontvanger', class: 'form-control' %>
+                              <%= customer.text_field :address_line_1, class: 'form-control chosen_customers_addressline1' %>
                             </div>
                             <div class="field">
                               <%= customer.label 'Postcode & stad', class: 'text-large' %><br>
-                              <%= customer.text_field :zip_code, placeholder: '1234AB Rotterdam', class: 'form-control' %>
+                              <%= customer.text_field :zip_code, class: 'form-control chosen_customers_zipcode' %>
                             </div><hr/>
                         <% end %>
                         <!-- Button trigger modal -->
@@ -89,30 +89,10 @@
                         <h4 class="modal-title" id="myModalLabel">Kies bestaande klant</h4>
                       </div>
                       <div class="modal-body">
-                        <% current_user.customers.each do |customer| %>
-                        <table class="table table-bordered table-hover">
-                          <thead>
-                            <tr>
-                              <td> # </td>
-                              <td>Bedrijfsnaam</td>
-                              <td>Adres</td>
-                              <td>Postcode, stad</td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td><%= customer.id %></td>
-                              <td><%= customer.company_name %></td>
-                              <td><%= customer.address_line_1 %></td>
-                              <td><%= customer.zip_code%></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <% end %>
+                        <%= select_tag 'Kies klant', content_tag(:option,'Kies een optie...',:value=>"") + options_from_collection_for_select(current_user.customers.all, 'id', 'display_customer_info'), id: "choose_customer", class: 'form-control' %>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
-                        <button type="button" class="btn btn-primary btn-blue">Toevoegen</button>
                       </div>
                     </div>
                   </div>
@@ -122,15 +102,15 @@
                 <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
                   <li>
                     <strong>Bedrijfsnaam:</strong><br/>
-                    <%= company.text_field :company_name, class: 'form-control chosen_company_name' %>
+                    <%= company.text_field :company_name, class: 'form-control chosen_companies_companyname' %>
                   </li>
                   <li>
                     <strong>BTW:</strong><br/>
-                    <%= company.text_field :btw_number, class: 'form-control chosen_company_btw' %>
+                    <%= company.text_field :btw_number, class: 'form-control chosen_companies_btw' %>
                   </li>
                   <li>
                     <strong>IBAN:</strong><br/>
-                    <%= company.text_field :iban_number, class: 'form-control chosen_company_iban' %>
+                    <%= company.text_field :iban_number, class: 'form-control chosen_companies_iban' %>
                   </li><br/>
                   <li>
                     <button type="button" class="btn btn-primary btn-blue form-control" data-toggle="modal" data-target="#myModalCompany">
@@ -155,7 +135,7 @@
                         <h4 class="modal-title" id="myModalLabel">Kies sjabloon</h4>
                       </div>
                       <div class="modal-body">
-                          <%= select_tag 'choose company', content_tag(:option,'Kies een optie...',:value=>"") + options_from_collection_for_select(current_user.companies.all, 'id', 'display_company_info'), id: "choose_company", class: 'form-control' %>
+                          <%= select_tag 'Kies Sjabloon', content_tag(:option,'Kies een optie...',:value=>"") + options_from_collection_for_select(current_user.companies.all, 'id', 'display_company_info'), id: "choose_company", class: 'form-control' %>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
@@ -262,20 +242,37 @@
     $("#choose_company").bind("change",function() {
       if ($(this).val() != undefined) {
         $.ajax({
-          url : "/kies-sjabloon",
+          url : "/kies-bestaande-sjabloon",
           data: {'company': $(this).val()},
           dataType: "json",
           type: "GET",
           success : function(data) {
-            $('.chosen_company_name').val(data["company_name"]).text(data["company_name"]);
-            $('.chosen_company_btw').val(data["btw_number"]).text(data["btw_number"]);
-            $('.chosen_company_iban').val(data["iban_number"]).text(data["iban_number"]);
-            $('.chosen_company_logo').attr("src", data["logo"]);
+            $('.chosen_companies_companyname').val(data["company_name"]).text(data["company_name"]);
+            $('.chosen_companies_btw').val(data["btw_number"]).text(data["btw_number"]);
+            $('.chosen_companies_iban').val(data["iban_number"]).text(data["iban_number"]);
+            $('.chosen_companies_logo').attr("src", data["logo"]);
+          }
+        })
+      }
+    });
+
+    $('#choose_customer').on('click', function() {
+      if ($(this).val() != undefined) {
+        $.ajax({
+          url: '/kies-bestaande-klant',
+          data: {'customer': $(this).val()},
+          dataType: "json",
+          type: "GET",
+          success: function(data) {
+            $('.chosen_customers_companyname').val(data["company_name"]).text(data["company_name"]);
+            $('.chosen_customers_addressline1').val(data["address_line_1"]).text(data["address_line_1"]);
+            $('.chosen_customers_zipcode').val(data["zip_code"]).text(data["zip_code"]);
           }
         })
       }
     })
-  })
+  });
+
 </script>
 
 
