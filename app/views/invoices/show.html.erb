@@ -53,7 +53,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12">
+                  <div class="col-md-12 table-responsive">
                     <table class="table table-striped">
                       <thead>
                       <tr>
@@ -116,46 +116,24 @@
               <div class="panel-footer">
                 <% @invoice.total = 0 if @invoice.total.nil? %><% @invoice.duedate = Date.today + 2.weeks if @invoice.duedate.nil? %>
                 <%= @invoice.footer.present? ? @invoice.footer : "We verzoeken u vriendelijk het bovenstaande bedrag van
-            €#{'%.2f' % @invoice.total} voor #{@invoice.duedate.strftime('%d-%m-%Y')} te voldoen op onze bankrekening onder vermelding van het
+            €#{'%.2f' % @invoice.total} voor #{@invoice.duedate.strftime('%d-%m-%Y')} te voldoen op '#{@invoice.company.iban_number}' onder vermelding van het
             factuurnummer #{@invoice.number}. Voor vragen kunt u contact opnemen per e-mail." %>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-3">
+              <%= link_to 'Terug', :back , class: 'btn btn-primary btn-success btn-block' %><hr/>
+            </div>
             <div class="col-md-4">
               <%= link_to 'Aanpassen', edit_invoice_path(@invoice), class: 'btn btn-primary btn-info btn-block' %><hr/>
             </div>
-            <div class="col-md-4">
-              <%= link_to 'Terug', invoices_path, class: 'btn btn-primary btn-success btn-block' %><hr/>
-            </div>
-            <div class="col-md-4">
-              <p class="btn btn-primary btn-block print_button"><span class="fa fa-print"></span> PRINT </p><hr/>
-            </div>
+            <div class="col-md-5">
+              <%= link_to 'Download', invoices_path, class: 'btn btn-primary btn-azure btn-block' %><hr/>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
-
-
-  <script>
-  // on click of print button hide all div's except invoice and then force print
-    $(document).ready(function() {
-      $(document).on('click', '.print_button', function() {
-        $('.print_invoice').css({"width": '100%', "height": "100%");
-        $('.hide_this').hide();
-        window.print();
-
-        // return all hidden div's on invoice click
-        $('.print_invoice').click(function() {
-          $('.hide_this').show();
-          $(this).css({width: '83.33333333%'},{height: '60%'});
-        });
-      });
-    });
-</script>
-
