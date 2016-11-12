@@ -32,10 +32,10 @@
                 </div><br/>
                 <p class="text-small float-left">
                   Heeft u nog geen account? -  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-                      <%= link_to "Registreren", new_registration_path(resource_name) %>
+                      <%= link_to "Registreren", gebruiker_registreren_path %>
                   <% end -%> ||
                   <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-                      <%= link_to "Geen bevestigingsemail ontvangen?", new_confirmation_path(resource_name) %><br />
+                      <%= link_to "Geen bevestigingsemail ontvangen?", gebruiker_bevestigingsinstructies_path %><br />
                   <% end -%>
                 </p>
               </form>
