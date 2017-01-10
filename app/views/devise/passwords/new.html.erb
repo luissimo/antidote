@@ -21,9 +21,9 @@
               </div><br/>
               <p class="text-small text-center ">
                  <%- if controller_name != 'sessions' %>
-                    <%= link_to "Inloggen", new_session_path(resource_name) %> |
+                    <%= link_to "Inloggen", gebruiker_inloggen_path %> |
                     <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-                        <%= link_to "Geen bevestigingsemail ontvangen?", new_confirmation_path(resource_name) %>
+                        <%= link_to "Geen bevestigingsemail ontvangen?", gebruiker_bevestigingsinstructies_path %>
                     <% end -%>
                 <% end -%>
               </p>

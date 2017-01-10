@@ -47,7 +47,8 @@
               <div class="col-sm-8">
                 <div class="col-sm-6">
                   <%= f.fields_for :company do |company| %>
-                      <%= image_tag @picture.to_s, class: 'chosen_companies_logo' %>
+                      <%= company.hidden_field :picture, class: 'chosen_companies_logo' %>
+                      <%= image_tag @picture, class: 'chosen_companies_logo' %>
                 </div>
               </div>
               <div class="col-sm-4">
@@ -237,7 +238,6 @@
 <!-- end: INVOICE -->
 
 <script>
-
   $(document).ready(function() {
     $("#choose_company").bind("change",function() {
       if ($(this).val() != undefined) {
@@ -256,7 +256,7 @@
       }
     });
 
-    $('#choose_customer').on('click', function() {
+    $('#choose_customer').on('change', function() {
       if ($(this).val() != undefined) {
         $.ajax({
           url: '/kies-bestaande-klant',

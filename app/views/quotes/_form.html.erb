@@ -45,7 +45,7 @@
               <div class="invoice">
                 <div class="row invoice-logo">
                   <div class="col-sm-6">
-                    <img alt="" src="">
+                    <%= image_tag @picture.to_s, class: 'chosen_companies_logo' %>
                   </div>
                   <div class="col-sm-6">
                     <p class="text-dark">
@@ -60,36 +60,60 @@
                         <%= f.fields_for :customer do |customer| %>
                             <div class="field">
                               <%= customer.label 'Bedrijfsnaam ontvanger', class: 'text-large'  %><br/>
-                              <%= customer.text_field :company_name, placeholder: 'bedrijfsnaam', class: 'form-control customer_name_input' %>
+                              <%= customer.text_field :company_name, class: 'form-control customer_name_input chosen_customers_companyname' %>
                             </div>
                             <div class="field">
                               <%= customer.label 'Adres ontvanger', class: 'text-large' %><br>
-                              <%= customer.text_field :address_line_1, placeholder: 'adres ontvanger', class: 'form-control' %>
+                              <%= customer.text_field :address_line_1, class: 'form-control chosen_customers_addressline1' %>
                             </div>
                             <div class="field">
                               <%= customer.label 'Postcode & stad', class: 'text-large' %><br>
-                              <%= customer.text_field :zip_code, placeholder: '1234AB Rotterdam', class: 'form-control' %>
+                              <%= customer.text_field :zip_code, class: 'form-control chosen_customers_zipcode' %>
                             </div>
                         <% end %>
+                        <button type="button" class="btn btn-primary btn-blue form-control" data-toggle="modal" data-target="#myModalCustomer">
+                          Kies bestaande klant
+                        </button>
                       </address>
+                    </div>
+                    <div class="modal fade" id="myModalCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Kies bestaande klant</h4>
+                          </div>
+                          <div class="modal-body">
+                            <%= select_tag 'Kies klant', content_tag(:option,'Kies een optie...',:value=>"") + options_from_collection_for_select(current_user.customers.all, 'id', 'display_customer_info'), id: "choose_customer", class: 'form-control' %>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-4 pull-right">
                     <ul class="list-unstyled invoice-details padding-bottom-30 padding-top-10 text-dark">
                       <%= f.fields_for :company do |company| %>
                           <li>
-                            <strong>BTW:</strong><br/>
-                            <%= company.text_field :btw_number, class: 'form-control' %>
+                            <strong>Bedrijfsnaam:</strong><br/>
+                            <%= company.text_field :company_name, class: 'form-control company_name_input chosen_companies_companyname' %>
                           </li>
                           <li>
-                            <strong>Bedrijfsnaam:</strong><br/>
-                            <%= company.text_field :company_name, class: 'form-control company_name_input' %>
+                            <strong>BTW:</strong><br/>
+                            <%= company.text_field :btw_number, class: 'form-control chosen_companies_btw' %>
                           </li>
                           <li>
                             <strong>IBAN:</strong><br/>
-                            <%= company.text_field :iban_number, class: 'form-control' %>
+                            <%= company.text_field :iban_number, class: 'form-control chosen_companies_iban' %>
                           </li>
                           <li><br/>
+                            <button type="button" class="btn btn-primary btn-blue form-control" data-toggle="modal" data-target="#myModalCompany">
+                              Kies sjabloon
+                            </button>
+                          </li><hr/>
+                          <li>
                             <strong>Offertedatum:</strong> <em id="date_output">01/01/2016</em>
                           </li>
                           <li>
@@ -97,6 +121,25 @@
                           </li>
                       <% end %>
                     </ul>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModalCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Kies sjabloon</h4>
+                          </div>
+                          <div class="modal-body">
+                            <%= select_tag 'Kies Sjabloon', content_tag(:option,'Kies een optie...',:value=>"") + options_from_collection_for_select(current_user.companies.all, 'id', 'display_company_info'), id: "choose_company", class: 'form-control' %>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div><hr/>
                 <div class="row">
@@ -198,6 +241,43 @@
     </div><br/><br/>
 <% end %>
 <!-- end: INVOICE -->
+
+<script>
+  $(document).ready(function() {
+    $("#choose_company").bind("change",function() {
+      if ($(this).val() != undefined) {
+        $.ajax({
+          url : "/kies-bestaande-sjabloon",
+          data: {'company': $(this).val()},
+          dataType: "json",
+          type: "GET",
+          success : function(data) {
+            $('.chosen_companies_companyname').val(data["company_name"]).text(data["company_name"]);
+            $('.chosen_companies_btw').val(data["btw_number"]).text(data["btw_number"]);
+            $('.chosen_companies_iban').val(data["iban_number"]).text(data["iban_number"]);
+            $('.chosen_companies_logo').attr("src", data["logo"]);
+          }
+        })
+      }
+    });
+
+    $('#choose_customer').on('change', function() {
+      if ($(this).val() != undefined) {
+        $.ajax({
+          url: '/kies-bestaande-klant',
+          data: {'customer': $(this).val()},
+          dataType: "json",
+          type: "GET",
+          success: function(data) {
+            $('.chosen_customers_companyname').val(data["company_name"]).text(data["company_name"]);
+            $('.chosen_customers_addressline1').val(data["address_line_1"]).text(data["address_line_1"]);
+            $('.chosen_customers_zipcode').val(data["zip_code"]).text(data["zip_code"]);
+          }
+        })
+      }
+    })
+  });
+</script>
 
 
 <script src="/LAYOUT-4/STANDARD/assets/js/quote.js"></script>

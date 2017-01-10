@@ -3,7 +3,7 @@
   <div class="panel panel-white load1">
     <div class="panel-heading border-light">
       <div class="logo text-center">
-        <img src="/LAYOUT-4/STANDARD/assets/images/logo.png" alt="OQBA Boekhouderskantoor Rotterdam" width="40%" />
+        <a href="/"><img src="/LAYOUT-4/STANDARD/assets/images/logo.png" alt="OQBA Boekhouderskantoor Rotterdam" width="40%" /></a>
       </div><hr/>
       <h4 class="panel-title text-center"><span class="text-bold">Inloggen</span></h4>
     </div>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="form-group form-actions">
                   <%= f.label :wachtwoord %> (<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-                      <%= link_to "Wachtwoord vergeten?", new_password_path(resource_name) %>
+                      <%= link_to "Wachtwoord vergeten?", gebruiker_nieuwe_wachtwoord_path %>
                   <% end -%>)<br />
                   <%= f.password_field :password, class: 'form-control password', autocomplete: "off" %>
                 </div>

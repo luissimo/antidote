@@ -16,6 +16,7 @@ gem 'therubyracer'
 gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 gem 'cocoon', '~> 1.2', '>= 1.2.9'
 gem 'devise'
+gem 'ruby-saml', '~> 1.0.0'
 gem 'mail_form'
 gem 'carrierwave', '0.10.0'
 gem 'mini_magick', '3.8.0'
@@ -29,6 +30,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   gem 'byebug'
+  gem 'rspec-rails', '~> 3.5'
 end
 
 group :development do

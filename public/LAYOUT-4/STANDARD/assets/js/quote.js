@@ -1,5 +1,9 @@
 // Output customer name after 'geachte'
 $(document).on('keyup', '.customer_name_input', function() {
+      $('.customer_name_output').text($(this).val());
+});
+
+$(document).on('change', '.chosen_customers_companyname', function() {
     $('.customer_name_output').text($(this).val());
 });
 
